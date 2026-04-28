@@ -12,4 +12,7 @@
       <ProjectReference Include="..\..\src\OrderPoint.Api\OrderPoint.Api.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <PackageReference Include="Aspire.Hosting.PostgreSQL" Version="13.2.1" />
+    </ItemGroup>
 </Project>
