@@ -1,0 +1,28 @@
+﻿using OrderPoint.Application.Dtos;
+using OrderPoint.Application.Dtos.Mappers;
+using OrderPoint.Application.Mediator;
+using OrderPoint.Application.Repositories;
+using OrderPoint.Domain.Entities;
+using OrderPoint.Domain.Outcomes;
+
+namespace OrderPoint.Application.Queries;
+
+public sealed record GetCategoriesQuery(int PageNumber, int PageSize) : IQuery<PaginationDto<CategoryDto>>;
+
+internal sealed class GetCategoriesQueryHandler(ICategoryRepository categoryRepository)
+    : IQueryHandler<GetCategoriesQuery, PaginationDto<CategoryDto>>
+{
+    public async Task<Result<PaginationDto<CategoryDto>>> Handle(
+        GetCategoriesQuery query,
+        CancellationToken cancellationToken)
+    {
+        (IReadOnlyList<Category> categories, int totalCount) = await categoryRepository
+            .GetPaginatedAsync(query.PageNumber, query.PageSize, cancellationToken);
+
+        return new PaginationDto<CategoryDto>(
+            categories.Select(category => category.ToCategoryDto()).ToList(),
+            query.PageNumber,
+            query.PageSize,
+            totalCount);
+    }
+}
