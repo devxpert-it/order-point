@@ -10,4 +10,8 @@
       <ProjectReference Include="..\OrderPoint.Application\OrderPoint.Application.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.1" />
+    </ItemGroup>
+
 </Project>
