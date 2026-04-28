@@ -5,6 +5,7 @@ using OrderPoint.Api.Extensions;
 using OrderPoint.Application;
 using OrderPoint.Infrastructure;
 using OrderPoint.ServiceDefaults;
+using Scalar.AspNetCore;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +39,17 @@ app.MapEndpoints();
 
 // API docs
 app.MapOpenApi();
+app.MapScalarApiReference(options =>
+{
+    options
+        .WithTitle("OrderPoint API")
+        .WithClassicLayout()
+        .WithTheme(ScalarTheme.Alternate)
+        .ExpandAllTags()
+        .SortOperationsByMethod();
+
+    options.HideClientButton = true;
+});
 
 // Database
 app.ApplyMigrations();
