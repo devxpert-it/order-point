@@ -34,12 +34,3 @@ public sealed class Error
     public static Error Conflict(string code, string description)
         => new(code, description, ErrorType.Conflict);
 }
-
-public enum ErrorType
-{
-    Failure,
-    RequestValidation,
-    Validation,
-    NotFound,
-    Conflict
-}

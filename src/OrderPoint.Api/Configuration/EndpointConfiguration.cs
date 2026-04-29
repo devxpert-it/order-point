@@ -1,9 +1,9 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace OrderPoint.Api.Extensions;
+namespace OrderPoint.Api.Configuration;
 
-internal static class EndpointExtensions
+internal static class EndpointConfiguration
 {
     internal static IServiceCollection AddEndpoints(this IServiceCollection services, Assembly assembly)
     {
@@ -31,9 +31,4 @@ internal static class EndpointExtensions
 
         return app;
     }
-}
-
-internal interface IEndpoint
-{
-    void MapEndpoint(IEndpointRouteBuilder app);
 }
