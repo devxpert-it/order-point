@@ -8,6 +8,7 @@ import Dashboard from "./pages/dashboard/Dashboard.jsx";
 import Layout from "./layout/Layout.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CssBaseline } from "@mui/material";
+import Categories from "./pages/category/Categories.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -16,6 +17,7 @@ createRoot(document.getElementById("root")).render(
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Dashboard />} />
+          <Route path="categories" element={<Categories />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -11,7 +11,7 @@ function Layout() {
     <Box sx={{ display: "flex" }}>
       <Sidebar open={sidebarOpen} />
       <Box sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}>
-        <Topbar onMenuClick={() => setSidebarOpen((prev) => !prev)} />
+        <Topbar onMenuClick={() => setSidebarOpen((previous) => !previous)} />
         <Box component="main" sx={{ p: 3, flexGrow: 1 }}>
           <Outlet />
         </Box>

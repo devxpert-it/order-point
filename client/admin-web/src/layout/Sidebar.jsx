@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Divider,
   Drawer,
@@ -68,20 +69,15 @@ function Sidebar({ open }) {
           color: "white",
         }}
       >
-        <img
+        <Avatar
           src={imagePlaceholder}
-          alt="OrderPoint logo"
-          height={40}
-          style={{
-            borderRadius: "50%",
-            border: "0.5px solid gray",
-            marginRight: "8px",
-          }}
+          alt={"OrderPoint logo"}
+          variant="rounded"
+          sx={{ marginRight: 1 }}
         />
+
         <Stack>
-          <Typography variant="h6" fontWeight="bold">
-            OrderPoint
-          </Typography>
+          <Typography variant="h6">OrderPoint</Typography>
           <Typography variant="subtle" sx={{ fontSize: 12 }}>
             Admin Web
           </Typography>
