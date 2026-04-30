@@ -28,16 +28,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import imagePlaceholder from "../../assets/image-placeholder.svg";
 import { useState } from "react";
-import { useCategoryApiService } from "../../hooks/useCategoryApiService.js";
-
-function formatDate(dateStr) {
-  if (!dateStr) return "-";
-  return new Date(dateStr).toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
-}
+import { useCategoryApiService } from "../../api/hooks/useCategoryApiService.js";
+import { formatDate } from "../../utilities/dateUtilities.js";
 
 function CategoriesPage() {
   const [pageNumber, setPageNumber] = useState(0);
@@ -60,11 +52,6 @@ function CategoriesPage() {
   const topCategories = [...categories]
     .sort((a, b) => b.itemCount - a.itemCount)
     .slice(0, 5);
-
-  // TODO: move to return below
-  if (isLoading) return <CircularProgress />;
-  if (isError)
-    return <Alert severity={"error"}>Failed to load categories.</Alert>;
 
   const handleChangePageNumber = (_, newPageNumber) =>
     setPageNumber(newPageNumber);
@@ -114,96 +101,124 @@ function CategoriesPage() {
         </Button>
       </Stack>
 
-      <Grid container spacing={2} sx={{ mb: 3 }}>
-        {topCategories.map((category) => (
-          <Grid size={12 / 5} key={category.id}>
-            <Paper
+      {isLoading || isError ? (
+        <Paper sx={{ p: 3 }}>
+          {isLoading && (
+            <Box
               sx={{
-                py: 3,
                 display: "flex",
                 flexDirection: "column",
+                justifyContent: "center",
                 alignItems: "center",
               }}
             >
-              <Avatar
-                src={imagePlaceholder}
-                alt={`${category.name} image`}
-                variant={"rounded"}
-                sx={{ width: 50, height: 50, marginBottom: 1 }}
-              />
-
-              <Typography variant={"body1"} sx={{ fontWeight: "bold", mb: 1 }}>
-                {category.name}
-              </Typography>
-
-              <Typography variant={"body2"} sx={{ fontSize: 12 }}>
-                {category.itemCount} items
-              </Typography>
-            </Paper>
-          </Grid>
-        ))}
-      </Grid>
-
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead sx={{ "& .MuiTableCell-root": { fontSize: 12 } }}>
-            <TableRow>
-              <TableCell></TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Items count</TableCell>
-              <TableCell>Created at</TableCell>
-              <TableCell></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {categories.map((category) => (
-              <TableRow key={category.id} hover>
-                <TableCell>
+              <CircularProgress sx={{ mb: 2 }} />
+              <Typography variant={"body2"}>Loading...</Typography>
+            </Box>
+          )}
+          {isError && (
+            <Box>
+              <Alert severity="error">Failed to get categories.</Alert>
+            </Box>
+          )}
+        </Paper>
+      ) : (
+        <>
+          <Grid container spacing={2} sx={{ mb: 3 }}>
+            {topCategories.map((category) => (
+              <Grid size={12 / 5} key={category.id}>
+                <Paper
+                  sx={{
+                    py: 3,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
                   <Avatar
                     src={imagePlaceholder}
-                    alt={category.name}
+                    alt={`${category.name} image`}
                     variant={"rounded"}
+                    sx={{ width: 50, height: 50, marginBottom: 1 }}
                   />
-                </TableCell>
-                <TableCell sx={{ fontWeight: "bold" }}>
-                  {category.name}
-                </TableCell>
-                <TableCell>{category.itemCount} items</TableCell>
-                <TableCell>{formatDate(category.createdAtUtc)}</TableCell>
-                <TableCell align={"right"}>
-                  <Tooltip title={"Details"}>
-                    <IconButton size={"small"} color={"primary"}>
-                      <VisibilityIcon fontSize={"small"} />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title={"Edit"}>
-                    <IconButton size={"small"}>
-                      <EditIcon fontSize={"small"} />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title={"Delete"}>
-                    <IconButton size={"small"} color={"error"}>
-                      <DeleteIcon fontSize={"small"} />
-                    </IconButton>
-                  </Tooltip>
-                </TableCell>
-              </TableRow>
+
+                  <Typography
+                    variant={"body1"}
+                    sx={{ fontWeight: "bold", mb: 1 }}
+                  >
+                    {category.name}
+                  </Typography>
+
+                  <Typography variant={"body2"} sx={{ fontSize: 12 }}>
+                    {category.itemCount} items
+                  </Typography>
+                </Paper>
+              </Grid>
             ))}
-          </TableBody>
-        </Table>
-        <TablePagination
-          component={"div"}
-          count={totalCount}
-          page={pageNumber}
-          rowsPerPage={pageSize}
-          onPageChange={handleChangePageNumber}
-          onRowsPerPageChange={handleChangePageSize}
-          rowsPerPageOptions={[5, 10, 25]}
-          labelDisplayedRows={({ from, to, count }) =>
-            `${from}–${to} of ${count} items`
-          }
-        />
-      </TableContainer>
+          </Grid>
+
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead sx={{ "& .MuiTableCell-root": { fontSize: 12 } }}>
+                <TableRow>
+                  <TableCell></TableCell>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Items count</TableCell>
+                  <TableCell>Created at</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {categories.map((category) => (
+                  <TableRow key={category.id} hover>
+                    <TableCell>
+                      <Avatar
+                        src={imagePlaceholder}
+                        alt={category.name}
+                        variant={"rounded"}
+                      />
+                    </TableCell>
+                    <TableCell sx={{ fontWeight: "bold" }}>
+                      {category.name}
+                    </TableCell>
+                    <TableCell>{category.itemCount} items</TableCell>
+                    <TableCell>{formatDate(category.createdAtUtc)}</TableCell>
+                    <TableCell align={"right"}>
+                      <Tooltip title={"Details"}>
+                        <IconButton size={"small"} color={"primary"}>
+                          <VisibilityIcon fontSize={"small"} />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title={"Edit"}>
+                        <IconButton size={"small"}>
+                          <EditIcon fontSize={"small"} />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title={"Delete"}>
+                        <IconButton size={"small"} color={"error"}>
+                          <DeleteIcon fontSize={"small"} />
+                        </IconButton>
+                      </Tooltip>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+            <TablePagination
+              component={"div"}
+              count={totalCount}
+              page={pageNumber}
+              rowsPerPage={pageSize}
+              onPageChange={handleChangePageNumber}
+              onRowsPerPageChange={handleChangePageSize}
+              rowsPerPageOptions={[5, 10, 25]}
+              labelDisplayedRows={({ from, to, count }) =>
+                `${from}–${to} of ${count} items`
+              }
+            />
+          </TableContainer>
+        </>
+      )}
     </Box>
   );
 }

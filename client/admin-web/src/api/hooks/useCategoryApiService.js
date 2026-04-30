@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getCategories } from "../api/categoryApiService.js";
+import { getCategories } from "../services/categoryApiService.js";
 
 export const useCategoryApiService = ({ pageNumber, pageSize }) => {
   return useQuery({
