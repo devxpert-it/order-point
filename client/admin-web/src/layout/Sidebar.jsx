@@ -42,7 +42,7 @@ function Sidebar({ open }) {
 
   return (
     <Drawer
-      variant="permanent"
+      variant={"permanent"}
       open={open}
       sx={{
         width: open ? DRAWER_WIDTH : 0,
@@ -72,13 +72,13 @@ function Sidebar({ open }) {
         <Avatar
           src={imagePlaceholder}
           alt={"OrderPoint logo"}
-          variant="rounded"
+          variant={"rounded"}
           sx={{ marginRight: 1 }}
         />
 
         <Stack>
-          <Typography variant="h6">OrderPoint</Typography>
-          <Typography variant="subtle" sx={{ fontSize: 12 }}>
+          <Typography variant={"h6"}>OrderPoint</Typography>
+          <Typography variant={"subtle"} sx={{ fontSize: 12 }}>
             Admin Web
           </Typography>
         </Stack>

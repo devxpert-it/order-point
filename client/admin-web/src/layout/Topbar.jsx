@@ -4,12 +4,12 @@ import MenuIcon from "@mui/icons-material/Menu";
 function Topbar({ onMenuClick }) {
   return (
     <Box>
-      <AppBar position="static">
+      <AppBar position={"static"}>
         <Toolbar>
           <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
+            size={"large"}
+            edge={"start"}
+            color={"inherit"}
             onClick={onMenuClick}
           >
             <MenuIcon />

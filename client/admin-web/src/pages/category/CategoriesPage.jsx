@@ -17,6 +17,8 @@ import {
   Tooltip,
   IconButton,
   TablePagination,
+  CircularProgress,
+  Alert,
 } from "@mui/material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import CategoryIcon from "@mui/icons-material/Category";
@@ -26,51 +28,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import imagePlaceholder from "../../assets/image-placeholder.svg";
 import { useState } from "react";
-
-const mockResponse = {
-  data: {
-    items: [
-      {
-        id: "1",
-        name: "Cocktails",
-        itemCount: 10,
-        createdAtUtc: "2024-01-01T10:00:00Z",
-        updatedAtUtc: null,
-      },
-      {
-        id: "2",
-        name: "Beers",
-        itemCount: 8,
-        createdAtUtc: "2024-01-02T10:00:00Z",
-        updatedAtUtc: "2024-03-01T10:00:00Z",
-      },
-      {
-        id: "3",
-        name: "Wines",
-        itemCount: 7,
-        createdAtUtc: "2024-01-03T10:00:00Z",
-        updatedAtUtc: null,
-      },
-      {
-        id: "4",
-        name: "Non-alcoholic",
-        itemCount: 3,
-        createdAtUtc: "2024-01-04T10:00:00Z",
-        updatedAtUtc: null,
-      },
-      {
-        id: "5",
-        name: "Snacks",
-        itemCount: 2,
-        createdAtUtc: "2024-01-05T10:00:00Z",
-        updatedAtUtc: null,
-      },
-    ],
-    pageNumber: 1,
-    pageSize: 5,
-    totalCount: 12,
-  },
-};
+import { useCategoryApiService } from "../../hooks/useCategoryApiService.js";
 
 function formatDate(dateStr) {
   if (!dateStr) return "-";
@@ -81,42 +39,60 @@ function formatDate(dateStr) {
   });
 }
 
-function Categories() {
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+function CategoriesPage() {
+  const [pageNumber, setPageNumber] = useState(0);
+  const [pageSize, setPageSize] = useState(5);
 
-  const { items: categories, totalCount } = mockResponse.data;
+  // TODO: error handling
+  const {
+    data: response,
+    isLoading,
+    isError,
+  } = useCategoryApiService({
+    pageNumber: pageNumber + 1,
+    pageSize: pageSize,
+  });
 
+  const categories = response?.data?.items ?? [];
+  const totalCount = response?.data?.totalCount ?? 0;
+
+  // TODO: separate API call
   const topCategories = [...categories]
     .sort((a, b) => b.itemCount - a.itemCount)
     .slice(0, 5);
 
-  const handleChangePage = (_, newPage) => setPage(newPage);
+  // TODO: move to return below
+  if (isLoading) return <CircularProgress />;
+  if (isError)
+    return <Alert severity={"error"}>Failed to load categories.</Alert>;
 
-  const handleChangeRowsPerPage = (e) => {
-    setRowsPerPage(parseInt(e.target.value, 10));
-    setPage(0);
+  const handleChangePageNumber = (_, newPageNumber) =>
+    setPageNumber(newPageNumber);
+
+  const handleChangePageSize = (e) => {
+    setPageSize(parseInt(e.target.value, 10));
+    setPageNumber(0);
   };
 
   return (
     <Box>
       <Stack
-        direction="row"
+        direction={"row"}
         sx={{ justifyContent: "space-between", alignItems: "flex-end", mb: 3 }}
       >
         <Box>
-          <Typography variant="h5" sx={{ marginBottom: 1 }}>
+          <Typography variant={"h5"} sx={{ marginBottom: 1 }}>
             Categories
           </Typography>
 
-          <Breadcrumbs separator="›" sx={{ fontSize: 12 }}>
+          <Breadcrumbs separator={"›"} sx={{ fontSize: 12 }}>
             <Link
-              underline="hover"
+              underline={"hover"}
               sx={{ display: "flex", alignItems: "center" }}
-              color="inherit"
-              href="/"
+              color={"inherit"}
+              href={"/"}
             >
-              <DashboardIcon sx={{ mr: 0.5 }} fontSize="inherit" />
+              <DashboardIcon sx={{ mr: 0.5 }} fontSize={"inherit"} />
               Dashboard
             </Link>
             <Typography
@@ -127,13 +103,13 @@ function Categories() {
                 fontSize: 12,
               }}
             >
-              <CategoryIcon sx={{ mr: 0.5 }} fontSize="inherit" />
+              <CategoryIcon sx={{ mr: 0.5 }} fontSize={"inherit"} />
               Categories
             </Typography>
           </Breadcrumbs>
         </Box>
 
-        <Button variant="contained" startIcon={<AddIcon />}>
+        <Button variant={"contained"} startIcon={<AddIcon />}>
           Add category
         </Button>
       </Stack>
@@ -152,7 +128,7 @@ function Categories() {
               <Avatar
                 src={imagePlaceholder}
                 alt={`${category.name} image`}
-                variant="rounded"
+                variant={"rounded"}
                 sx={{ width: 50, height: 50, marginBottom: 1 }}
               />
 
@@ -160,7 +136,7 @@ function Categories() {
                 {category.name}
               </Typography>
 
-              <Typography variant="body2" sx={{ fontSize: 12 }}>
+              <Typography variant={"body2"} sx={{ fontSize: 12 }}>
                 {category.itemCount} items
               </Typography>
             </Paper>
@@ -186,7 +162,7 @@ function Categories() {
                   <Avatar
                     src={imagePlaceholder}
                     alt={category.name}
-                    variant="rounded"
+                    variant={"rounded"}
                   />
                 </TableCell>
                 <TableCell sx={{ fontWeight: "bold" }}>
@@ -194,20 +170,20 @@ function Categories() {
                 </TableCell>
                 <TableCell>{category.itemCount} items</TableCell>
                 <TableCell>{formatDate(category.createdAtUtc)}</TableCell>
-                <TableCell align="right">
-                  <Tooltip title="Details">
-                    <IconButton size="small" color="primary">
-                      <VisibilityIcon fontSize="small" />
+                <TableCell align={"right"}>
+                  <Tooltip title={"Details"}>
+                    <IconButton size={"small"} color={"primary"}>
+                      <VisibilityIcon fontSize={"small"} />
                     </IconButton>
                   </Tooltip>
-                  <Tooltip title="Edit">
-                    <IconButton size="small">
-                      <EditIcon fontSize="small" />
+                  <Tooltip title={"Edit"}>
+                    <IconButton size={"small"}>
+                      <EditIcon fontSize={"small"} />
                     </IconButton>
                   </Tooltip>
-                  <Tooltip title="Delete">
-                    <IconButton size="small" color="error">
-                      <DeleteIcon fontSize="small" />
+                  <Tooltip title={"Delete"}>
+                    <IconButton size={"small"} color={"error"}>
+                      <DeleteIcon fontSize={"small"} />
                     </IconButton>
                   </Tooltip>
                 </TableCell>
@@ -216,12 +192,12 @@ function Categories() {
           </TableBody>
         </Table>
         <TablePagination
-          component="div"
+          component={"div"}
           count={totalCount}
-          page={page}
-          rowsPerPage={rowsPerPage}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
+          page={pageNumber}
+          rowsPerPage={pageSize}
+          onPageChange={handleChangePageNumber}
+          onRowsPerPageChange={handleChangePageSize}
           rowsPerPageOptions={[5, 10, 25]}
           labelDisplayedRows={({ from, to, count }) =>
             `${from}–${to} of ${count} items`
@@ -232,4 +208,4 @@ function Categories() {
   );
 }
 
-export default Categories;
+export default CategoriesPage;
