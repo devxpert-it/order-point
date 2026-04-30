@@ -1,35 +1,13 @@
-import {
-  Box,
-  Typography,
-  Breadcrumbs,
-  Link,
-  Button,
-  Stack,
-  Paper,
-  Grid,
-  TableContainer,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  Avatar,
-  Tooltip,
-  IconButton,
-  TablePagination,
-  CircularProgress,
-  Alert,
-} from "@mui/material";
-import DashboardIcon from "@mui/icons-material/Dashboard";
+import { Box, Button } from "@mui/material";
 import CategoryIcon from "@mui/icons-material/Category";
 import AddIcon from "@mui/icons-material/Add";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import imagePlaceholder from "../../assets/image-placeholder.svg";
 import { useState } from "react";
 import { useCategoryApiService } from "../../api/hooks/useCategoryApiService.js";
-import { formatDate } from "../../utilities/dateUtilities.js";
+import PageHeader from "../../components/PageHeader.jsx";
+import LoadingSpinner from "../../components/LoadingSpinner.jsx";
+import TopCategoriesGrid from "./components/TopCategoriesGrid.jsx";
+import CategoriesTable from "./components/CategoriesTable.jsx";
+import ErrorPaper from "../../components/ErrorPaper.jsx";
 
 function CategoriesPage() {
   const [pageNumber, setPageNumber] = useState(0);
@@ -63,160 +41,35 @@ function CategoriesPage() {
 
   return (
     <Box>
-      <Stack
-        direction={"row"}
-        sx={{ justifyContent: "space-between", alignItems: "flex-end", mb: 3 }}
-      >
-        <Box>
-          <Typography variant={"h5"} sx={{ marginBottom: 1 }}>
-            Categories
-          </Typography>
+      <PageHeader
+        title={"Categories"}
+        currentPage={{
+          label: "Categories",
+          icon: <CategoryIcon fontSize="inherit" />,
+        }}
+        action={
+          <Button variant={"contained"} startIcon={<AddIcon />}>
+            Add category
+          </Button>
+        }
+      />
 
-          <Breadcrumbs separator={"›"} sx={{ fontSize: 12 }}>
-            <Link
-              underline={"hover"}
-              sx={{ display: "flex", alignItems: "center" }}
-              color={"inherit"}
-              href={"/"}
-            >
-              <DashboardIcon sx={{ mr: 0.5 }} fontSize={"inherit"} />
-              Dashboard
-            </Link>
-            <Typography
-              sx={{
-                color: "text.primary",
-                display: "flex",
-                alignItems: "center",
-                fontSize: 12,
-              }}
-            >
-              <CategoryIcon sx={{ mr: 0.5 }} fontSize={"inherit"} />
-              Categories
-            </Typography>
-          </Breadcrumbs>
-        </Box>
+      {isLoading && <LoadingSpinner />}
 
-        <Button variant={"contained"} startIcon={<AddIcon />}>
-          Add category
-        </Button>
-      </Stack>
+      {isError && <ErrorPaper message={"Failed to get categories."} />}
 
-      {isLoading || isError ? (
-        <Paper sx={{ p: 3 }}>
-          {isLoading && (
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <CircularProgress sx={{ mb: 2 }} />
-              <Typography variant={"body2"}>Loading...</Typography>
-            </Box>
-          )}
-          {isError && (
-            <Box>
-              <Alert severity="error">Failed to get categories.</Alert>
-            </Box>
-          )}
-        </Paper>
-      ) : (
+      {!isLoading && !isError && (
         <>
-          <Grid container spacing={2} sx={{ mb: 3 }}>
-            {topCategories.map((category) => (
-              <Grid size={12 / 5} key={category.id}>
-                <Paper
-                  sx={{
-                    py: 3,
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
-                >
-                  <Avatar
-                    src={imagePlaceholder}
-                    alt={`${category.name} image`}
-                    variant={"rounded"}
-                    sx={{ width: 50, height: 50, marginBottom: 1 }}
-                  />
+          <TopCategoriesGrid categories={topCategories} />
 
-                  <Typography
-                    variant={"body1"}
-                    sx={{ fontWeight: "bold", mb: 1 }}
-                  >
-                    {category.name}
-                  </Typography>
-
-                  <Typography variant={"body2"} sx={{ fontSize: 12 }}>
-                    {category.itemCount} items
-                  </Typography>
-                </Paper>
-              </Grid>
-            ))}
-          </Grid>
-
-          <TableContainer component={Paper}>
-            <Table>
-              <TableHead sx={{ "& .MuiTableCell-root": { fontSize: 12 } }}>
-                <TableRow>
-                  <TableCell></TableCell>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Items count</TableCell>
-                  <TableCell>Created at</TableCell>
-                  <TableCell></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {categories.map((category) => (
-                  <TableRow key={category.id} hover>
-                    <TableCell>
-                      <Avatar
-                        src={imagePlaceholder}
-                        alt={category.name}
-                        variant={"rounded"}
-                      />
-                    </TableCell>
-                    <TableCell sx={{ fontWeight: "bold" }}>
-                      {category.name}
-                    </TableCell>
-                    <TableCell>{category.itemCount} items</TableCell>
-                    <TableCell>{formatDate(category.createdAtUtc)}</TableCell>
-                    <TableCell align={"right"}>
-                      <Tooltip title={"Details"}>
-                        <IconButton size={"small"} color={"primary"}>
-                          <VisibilityIcon fontSize={"small"} />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title={"Edit"}>
-                        <IconButton size={"small"}>
-                          <EditIcon fontSize={"small"} />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title={"Delete"}>
-                        <IconButton size={"small"} color={"error"}>
-                          <DeleteIcon fontSize={"small"} />
-                        </IconButton>
-                      </Tooltip>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-            <TablePagination
-              component={"div"}
-              count={totalCount}
-              page={pageNumber}
-              rowsPerPage={pageSize}
-              onPageChange={handleChangePageNumber}
-              onRowsPerPageChange={handleChangePageSize}
-              rowsPerPageOptions={[5, 10, 25]}
-              labelDisplayedRows={({ from, to, count }) =>
-                `${from}–${to} of ${count} items`
-              }
-            />
-          </TableContainer>
+          <CategoriesTable
+            categories={categories}
+            totalCount={totalCount}
+            pageNumber={pageNumber}
+            pageSize={pageSize}
+            onPageChange={handleChangePageNumber}
+            onPageSizeChange={handleChangePageSize}
+          />
         </>
       )}
     </Box>
