@@ -77,8 +77,11 @@ function Sidebar({ open }) {
         />
 
         <Stack>
-          <Typography variant={"h6"}>OrderPoint</Typography>
-          <Typography variant={"subtle"} sx={{ fontSize: 12 }}>
+          <Typography variant={"subtitle1"} sx={{ fontWeight: "bold" }}>
+            OrderPoint
+          </Typography>
+
+          <Typography variant={"subtitle2"} sx={{ fontSize: 11, opacity: 0.5 }}>
             Admin Web
           </Typography>
         </Stack>
