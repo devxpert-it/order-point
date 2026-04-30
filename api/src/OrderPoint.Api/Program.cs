@@ -16,6 +16,14 @@ builder.AddServiceDefaults();
 // API docs
 builder.Services.AddOpenApi();
 
+// Cors
+builder.Services.AddCors(options =>
+    options.AddPolicy("AllowAll", configure
+        => configure
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowAnyOrigin()));
+
 // Error handling
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<RequestValidationExceptionHandler>();
@@ -51,6 +59,9 @@ app.MapScalarApiReference(options =>
 
     options.HideClientButton = true;
 });
+
+// Cors
+app.UseCors("AllowAll");
 
 // Database
 app.ApplyMigrations();
