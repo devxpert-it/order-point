@@ -1,17 +1,18 @@
-﻿using OrderPoint.Domain.Outcomes;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using OrderPoint.Domain.Outcomes;
 
 namespace OrderPoint.Api.Extensions;
 
 internal static class ResultExtensions
 {
-    internal static IResult ToProblemDetails(this Result result)
+    internal static ProblemHttpResult ToProblemDetails(this Result result)
     {
         if (result.IsSuccess)
         {
             throw new InvalidOperationException("Cannot create problem details from successful result");
         }
 
-        return Results.Problem(
+        return TypedResults.Problem(
             statusCode: GetStatusCode(result.Error.Type),
             title: GetTitle(result.Error.Type),
             type: result.Error.Type.ToString(),

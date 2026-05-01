@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using OrderPoint.Api.Configuration;
 using OrderPoint.Api.Extensions;
@@ -16,12 +17,12 @@ internal sealed class GetCategoriesEndpoint : IEndpoint
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app
-            .MapGet("api/categories", Handler)
+            .MapGet("api/categories", HandleAsync)
             .WithName("GetCategories")
             .WithTags("Categories");
     }
 
-    private static async Task<IResult> Handler(
+    private static async Task<Results<Ok<GetCategoriesResponse>, ProblemHttpResult>> HandleAsync(
         [FromQuery] int pageNumber,
         [FromQuery] int pageSize,
         [FromQuery] string? searchQuery,
@@ -34,7 +35,7 @@ internal sealed class GetCategoriesEndpoint : IEndpoint
         Result<PaginationDto<CategoryDto>> result = await sender.Send(query, cancellationToken);
 
         return result.IsSuccess
-            ? Results.Ok(new GetCategoriesResponse(result.Value))
+            ? TypedResults.Ok(new GetCategoriesResponse(result.Value))
             : result.ToProblemDetails();
     }
 }
