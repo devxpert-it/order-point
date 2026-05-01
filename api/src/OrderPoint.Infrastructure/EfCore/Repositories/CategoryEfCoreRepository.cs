@@ -10,17 +10,23 @@ internal sealed class CategoryEfCoreRepository(ApplicationDbContext dbContext) :
     public async Task<(IReadOnlyList<Category>, int)> GetPaginatedAsync(
         int pageNumber = 1,
         int pageSize = 10,
+        string? searchQuery = null,
         CategorySortBy? sortBy = null,
         CancellationToken cancellationToken = default)
     {
         IQueryable<Category> query = dbContext.Categories;
 
-        int totalCount = await query.CountAsync(cancellationToken);
+        if (searchQuery is not null)
+        {
+            query = SearchCategories(query, searchQuery);
+        }
 
         if (sortBy.HasValue)
         {
             query = SortCategories(query, sortBy.Value);
         }
+
+        int totalCount = await query.CountAsync(cancellationToken);
 
         List<Category> categories = await query
             .Skip((pageNumber - 1) * pageSize)
@@ -28,6 +34,15 @@ internal sealed class CategoryEfCoreRepository(ApplicationDbContext dbContext) :
             .ToListAsync(cancellationToken);
 
         return (categories.AsReadOnly(), totalCount);
+    }
+
+    private static IQueryable<Category> SearchCategories(IQueryable<Category> query, string searchQuery)
+    {
+        string normalizedSearchQuery = searchQuery.ToLower();
+
+        query = query.Where(category => category.Name.ToLower().Contains(normalizedSearchQuery));
+
+        return query;
     }
 
     private static IQueryable<Category> SortCategories(IQueryable<Category> query, CategorySortBy sortBy) =>

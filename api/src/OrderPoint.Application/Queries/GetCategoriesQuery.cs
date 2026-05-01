@@ -8,7 +8,11 @@ using OrderPoint.Domain.Outcomes;
 
 namespace OrderPoint.Application.Queries;
 
-public sealed record GetCategoriesQuery(int PageNumber, int PageSize, CategorySortBy? SortBy)
+public sealed record GetCategoriesQuery(
+    int PageNumber,
+    int PageSize,
+    string? SearchQuery,
+    CategorySortBy? SortBy)
     : IQuery<PaginationDto<CategoryDto>>;
 
 internal sealed class GetCategoriesQueryHandler(ICategoryRepository categoryRepository)
@@ -19,7 +23,12 @@ internal sealed class GetCategoriesQueryHandler(ICategoryRepository categoryRepo
         CancellationToken cancellationToken)
     {
         (IReadOnlyList<Category> categories, int totalCount) = await categoryRepository
-            .GetPaginatedAsync(query.PageNumber, query.PageSize, query.SortBy, cancellationToken);
+            .GetPaginatedAsync(
+                query.PageNumber,
+                query.PageSize,
+                query.SearchQuery,
+                query.SortBy,
+                cancellationToken);
 
         return new PaginationDto<CategoryDto>(
             categories.Select(category => category.ToCategoryDto()).ToList(),

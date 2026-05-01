@@ -24,11 +24,12 @@ internal sealed class GetCategoriesEndpoint : IEndpoint
     private static async Task<IResult> Handler(
         [FromQuery] int pageNumber,
         [FromQuery] int pageSize,
+        [FromQuery] string? searchQuery,
         [FromQuery] CategorySortBy? sortBy,
         [FromServices] ISender sender,
         CancellationToken cancellationToken)
     {
-        GetCategoriesQuery query = new(pageNumber, pageSize, sortBy);
+        GetCategoriesQuery query = new(pageNumber, pageSize, searchQuery, sortBy);
 
         Result<PaginationDto<CategoryDto>> result = await sender.Send(query, cancellationToken);
 
