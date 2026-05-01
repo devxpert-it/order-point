@@ -1,7 +1,7 @@
 import { Alert, Box, Paper, Typography } from "@mui/material";
 import { getErrorDescription, getErrors } from "../api/errorHandler.js";
 
-function ErrorPaper({ error }) {
+function ApiErrorMessage({ error }) {
   const description = getErrorDescription(error);
   const errors = getErrors(error);
 
@@ -32,4 +32,4 @@ function ErrorPaper({ error }) {
   );
 }
 
-export default ErrorPaper;
+export default ApiErrorMessage;

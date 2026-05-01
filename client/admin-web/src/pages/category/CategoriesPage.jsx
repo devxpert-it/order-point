@@ -5,7 +5,7 @@ import { useCategoryApiService } from "../../api/hooks/useCategoryApiService.js"
 import PageHeader from "../../components/PageHeader.jsx";
 import TopCategoriesGrid from "./components/TopCategoriesGrid.jsx";
 import CategoriesTable from "./components/CategoriesTable.jsx";
-import ErrorPaper from "../../components/ErrorPaper.jsx";
+import ApiErrorMessage from "../../components/ApiErrorMessage.jsx";
 import { CategorySortBy } from "../../sorting/categorySortBy.js";
 import CategoriesTableActions from "./components/CategoriesTableActions.jsx";
 import { useDebounce } from "use-debounce";
@@ -77,7 +77,7 @@ function CategoriesPage() {
 
       <Box sx={{ mb: 3 }}>
         {isLoadingTop && <TopCategoriesGridSkeleton />}
-        {!isLoadingTop && isErrorTop && <ErrorPaper error={errorTop} />}
+        {!isLoadingTop && isErrorTop && <ApiErrorMessage error={errorTop} />}
         {!isLoadingTop && !isErrorTop && (
           <TopCategoriesGrid categories={topCategories} />
         )}
@@ -90,9 +90,10 @@ function CategoriesPage() {
           console.log("add category");
         }}
       />
+
       <Box>
         {isLoadingAll && <CategoriesTableSkeleton />}
-        {!isLoadingAll && isErrorAll && <ErrorPaper error={errorAll} />}
+        {!isLoadingAll && isErrorAll && <ApiErrorMessage error={errorAll} />}
         {!isLoadingAll && !isErrorAll && (
           <CategoriesTable
             categories={categories}

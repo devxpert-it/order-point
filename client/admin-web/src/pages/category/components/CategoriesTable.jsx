@@ -99,7 +99,7 @@ function CategoriesTable({
         <TableBody>
           {categories.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={5} align="center" sx={{ py: 4 }}>
+              <TableCell colSpan={5} align={"center"} sx={{ py: 4 }}>
                 <Box
                   sx={{
                     display: "flex",
