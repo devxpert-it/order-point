@@ -2,7 +2,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import { Link as RouterLink } from "react-router-dom";
 import { Box, Breadcrumbs, Link, Stack, Typography } from "@mui/material";
 
-function PageHeader({ title, breadcrumbs = [], currentPage, action }) {
+function PageHeader({ title, breadcrumbs = [], currentPage }) {
   return (
     <Stack
       direction={"row"}
@@ -60,8 +60,6 @@ function PageHeader({ title, breadcrumbs = [], currentPage, action }) {
           </Typography>
         </Breadcrumbs>
       </Box>
-
-      {action && <Box>{action}</Box>}
     </Stack>
   );
 }

@@ -1,6 +1,5 @@
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import CategoryIcon from "@mui/icons-material/Category";
-import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import { useCategoryApiService } from "../../api/hooks/useCategoryApiService.js";
 import PageHeader from "../../components/PageHeader.jsx";
@@ -9,11 +8,15 @@ import TopCategoriesGrid from "./components/TopCategoriesGrid.jsx";
 import CategoriesTable from "./components/CategoriesTable.jsx";
 import ErrorPaper from "../../components/ErrorPaper.jsx";
 import { CategorySortBy } from "../../sorting/categorySortBy.js";
+import CategoriesTableActions from "./components/CategoriesTableActions.jsx";
+import { useDebounce } from "use-debounce";
 
 function CategoriesPage() {
   const [pageNumber, setPageNumber] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [sortBy, setSortBy] = useState(CategorySortBy.CreatedAtDesc);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedSearchQuery] = useDebounce(searchQuery, 500);
 
   const {
     data: responseAll,
@@ -24,6 +27,7 @@ function CategoriesPage() {
     pageNumber: pageNumber + 1,
     pageSize,
     sortBy,
+    searchQuery: debouncedSearchQuery,
   });
 
   const {
@@ -36,9 +40,6 @@ function CategoriesPage() {
     pageSize: 5,
     sortBy: CategorySortBy.NameAsc,
   });
-
-  const isAnyLoading = isLoadingAll || isLoadingTop;
-  const isAnyError = isErrorAll || isErrorTop;
 
   const categories = responseAll?.data?.items ?? [];
   const totalCount = responseAll?.data?.totalCount ?? 0;
@@ -58,6 +59,11 @@ function CategoriesPage() {
     setPageNumber(0);
   };
 
+  const handleSearchChange = (value) => {
+    setSearchQuery(value);
+    setPageNumber(0);
+  };
+
   return (
     <Box>
       <PageHeader
@@ -66,11 +72,6 @@ function CategoriesPage() {
           label: "Categories",
           icon: <CategoryIcon fontSize="inherit" />,
         }}
-        action={
-          <Button variant={"contained"} startIcon={<AddIcon />}>
-            Add category
-          </Button>
-        }
       />
 
       <Box sx={{ mb: 3 }}>
@@ -80,6 +81,14 @@ function CategoriesPage() {
           <TopCategoriesGrid categories={topCategories} />
         )}
       </Box>
+
+      <CategoriesTableActions
+        searchQuery={searchQuery}
+        onSearchChange={handleSearchChange}
+        onAdd={() => {
+          console.log("add category");
+        }}
+      />
 
       <Box>
         {isLoadingAll && <LoadingSpinner />}
