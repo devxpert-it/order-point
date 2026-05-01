@@ -4,6 +4,7 @@ using OrderPoint.Api.Configuration;
 using OrderPoint.Api.Extensions;
 using OrderPoint.Application.Dtos;
 using OrderPoint.Application.Queries;
+using OrderPoint.Domain.Enumerations;
 using OrderPoint.Domain.Outcomes;
 
 namespace OrderPoint.Api.Endpoints.Categories;
@@ -23,10 +24,11 @@ internal sealed class GetCategoriesEndpoint : IEndpoint
     private static async Task<IResult> Handler(
         [FromQuery] int pageNumber,
         [FromQuery] int pageSize,
+        [FromQuery] CategorySortBy? sortBy,
         [FromServices] ISender sender,
         CancellationToken cancellationToken)
     {
-        GetCategoriesQuery query = new(pageNumber, pageSize);
+        GetCategoriesQuery query = new(pageNumber, pageSize, sortBy);
 
         Result<PaginationDto<CategoryDto>> result = await sender.Send(query, cancellationToken);
 
