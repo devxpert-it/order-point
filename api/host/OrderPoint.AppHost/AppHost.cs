@@ -1,3 +1,5 @@
+using Aspire.Hosting.JavaScript;
+
 IDistributedApplicationBuilder builder = DistributedApplication.CreateBuilder(args);
 
 IResourceBuilder<PostgresServerResource> postgres = builder
@@ -16,5 +18,10 @@ IResourceBuilder<ProjectResource> api = builder
     .WithHttpHealthCheck("/health")
     .WithReference(database)
     .WaitFor(database);
+
+IResourceBuilder<ViteAppResource> adminWeb = builder
+    .AddViteApp("admin-web", "../../../client/admin-web")
+    .WithReference(api)
+    .WaitFor(api);
 
 builder.Build().Run();
