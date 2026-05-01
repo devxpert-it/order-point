@@ -11,13 +11,13 @@ import ErrorPaper from "../../components/ErrorPaper.jsx";
 
 function CategoriesPage() {
   const [pageNumber, setPageNumber] = useState(0);
-  const [pageSize, setPageSize] = useState(5);
+  const [pageSize, setPageSize] = useState(10);
 
-  // TODO: error handling
   const {
     data: response,
     isLoading,
     isError,
+    error,
   } = useCategoryApiService({
     pageNumber: pageNumber + 1,
     pageSize: pageSize,
@@ -28,7 +28,7 @@ function CategoriesPage() {
 
   // TODO: separate API call
   const topCategories = [...categories]
-    .sort((a, b) => b.itemCount - a.itemCount)
+    .sort((a, b) => b.itemsCount - a.itemsCount)
     .slice(0, 5);
 
   const handleChangePageNumber = (_, newPageNumber) =>
@@ -56,7 +56,7 @@ function CategoriesPage() {
 
       {isLoading && <LoadingSpinner />}
 
-      {isError && <ErrorPaper message={"Failed to get categories."} />}
+      {isError && <ErrorPaper error={error} />}
 
       {!isLoading && !isError && (
         <>

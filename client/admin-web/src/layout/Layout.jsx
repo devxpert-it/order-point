@@ -8,11 +8,18 @@ function Layout() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", height: "100vh" }}>
       <Sidebar open={sidebarOpen} />
-      <Box sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}>
+      <Box
+        sx={{
+          flexGrow: 1,
+          display: "flex",
+          flexDirection: "column",
+          overflow: "hidden",
+        }}
+      >
         <Topbar onMenuClick={() => setSidebarOpen((previous) => !previous)} />
-        <Box component={"main"} sx={{ p: 2, flexGrow: 1 }}>
+        <Box component={"main"} sx={{ p: 2, flexGrow: 1, overflow: "auto" }}>
           <Outlet />
         </Box>
       </Box>

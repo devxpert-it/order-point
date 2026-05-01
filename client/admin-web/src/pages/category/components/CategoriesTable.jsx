@@ -51,7 +51,7 @@ function CategoriesTable({
 
               <TableCell sx={{ fontWeight: "bold" }}>{category.name}</TableCell>
 
-              <TableCell>{category.itemCount} items</TableCell>
+              <TableCell>{category.itemsCount} items</TableCell>
 
               <TableCell>{formatDate(category.createdAtUtc)}</TableCell>
 
@@ -85,7 +85,7 @@ function CategoriesTable({
         rowsPerPage={pageSize}
         onPageChange={onPageChange}
         onRowsPerPageChange={onPageSizeChange}
-        rowsPerPageOptions={[5, 10, 25]}
+        rowsPerPageOptions={[10, 20, 30]}
         labelDisplayedRows={({ from, to, count }) =>
           `${from}–${to} of ${count} items`
         }

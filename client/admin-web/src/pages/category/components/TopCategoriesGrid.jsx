@@ -26,7 +26,7 @@ function TopCategoriesGrid({ categories }) {
             </Typography>
 
             <Typography variant={"body2"} sx={{ fontSize: 12 }}>
-              {category.itemCount} items
+              {category.itemsCount} items
             </Typography>
           </Paper>
         </Grid>
