@@ -4,7 +4,7 @@ export function getProblemDetails(error) {
 
 export function getErrorDescription(error) {
   const problemDetails = getProblemDetails(error);
-  return problemDetails?.detail ?? null;
+  return problemDetails?.detail ?? "Unknown error occurred";
 }
 
 export function getErrors(error) {

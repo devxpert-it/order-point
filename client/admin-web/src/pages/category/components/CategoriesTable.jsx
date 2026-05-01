@@ -9,6 +9,7 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  TableSortLabel,
   Tooltip,
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -16,6 +17,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import imagePlaceholder from "../../../assets/image-placeholder.svg";
 import { formatDate } from "../../../utilities/dateUtilities.js";
+import { CategorySortBy } from "../../../sorting/categorySortBy.js";
 
 function CategoriesTable({
   categories,
@@ -24,16 +26,69 @@ function CategoriesTable({
   pageSize,
   onPageChange,
   onPageSizeChange,
+  sortBy,
+  onSortByChange,
 }) {
+  const sortColumns = [
+    {
+      label: "Name",
+      ascValue: CategorySortBy.NameAsc,
+      descValue: CategorySortBy.NameDesc,
+    },
+    {
+      label: "Items count",
+      ascValue: CategorySortBy.ItemsCountAsc,
+      descValue: CategorySortBy.ItemsCountDesc,
+    },
+    {
+      label: "Created at",
+      ascValue: CategorySortBy.CreatedAtAsc,
+      descValue: CategorySortBy.CreatedAtDesc,
+    },
+  ];
+
+  function getDirection(sortBy, ascValue, descValue) {
+    if (sortBy === ascValue) return "asc";
+    if (sortBy === descValue) return "desc";
+    return "desc";
+  }
+
+  function isActive(sortBy, ascValue, descValue) {
+    return sortBy === ascValue || sortBy === descValue;
+  }
+
+  const handleSortBy = (ascValue, descValue) => {
+    if (sortBy === ascValue) {
+      onSortByChange(descValue);
+    } else {
+      onSortByChange(ascValue);
+    }
+  };
+
   return (
     <TableContainer component={Paper}>
       <Table>
         <TableHead sx={{ "& .MuiTableCell-root": { fontSize: 12 } }}>
           <TableRow>
             <TableCell />
-            <TableCell>Name</TableCell>
-            <TableCell>Items count</TableCell>
-            <TableCell>Created at</TableCell>
+            {sortColumns.map((col) => (
+              <TableCell
+                key={col.label}
+                sortDirection={getDirection(
+                  sortBy,
+                  col.ascValue,
+                  col.descValue,
+                )}
+              >
+                <TableSortLabel
+                  active={isActive(sortBy, col.ascValue, col.descValue)}
+                  direction={getDirection(sortBy, col.ascValue, col.descValue)}
+                  onClick={() => handleSortBy(col.ascValue, col.descValue)}
+                >
+                  {col.label}
+                </TableSortLabel>
+              </TableCell>
+            ))}
             <TableCell />
           </TableRow>
         </TableHead>
