@@ -3,7 +3,8 @@ IDistributedApplicationBuilder builder = DistributedApplication.CreateBuilder(ar
 IResourceBuilder<PostgresServerResource> postgres = builder
     .AddPostgres("postgres")
     .WithDataVolume()
-    .WithLifetime(ContainerLifetime.Persistent);
+    .WithLifetime(ContainerLifetime.Persistent)
+    .WithEndpoint("tcp", endpoint => endpoint.Port = 59286);
 
 IResourceBuilder<PostgresDatabaseResource> database = postgres
     .AddDatabase("order-point-db");

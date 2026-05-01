@@ -18,16 +18,21 @@ internal sealed class CategoryTypeConfiguration : IEntityTypeConfiguration<Categ
             .IsRequired();
 
         builder
+            .Property(category => category.Name)
+            .HasMaxLength(30)
+            .IsRequired();
+
+        builder
+            .Property(category => category.ImageUrl)
+            .HasMaxLength(200)
+            .IsRequired(false);
+
+        builder
             .Property(category => category.CreatedAtUtc)
             .IsRequired();
 
         builder
             .Property(category => category.UpdatedAtUtc)
             .IsRequired(false);
-
-        builder
-            .Property(category => category.Name)
-            .HasMaxLength(30)
-            .IsRequired();
     }
 }
