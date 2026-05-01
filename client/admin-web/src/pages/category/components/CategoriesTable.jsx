@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Box,
   IconButton,
   Paper,
   Table,
@@ -11,10 +12,12 @@ import {
   TableRow,
   TableSortLabel,
   Tooltip,
+  Typography,
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import CategoryIcon from "@mui/icons-material/Category";
 import imagePlaceholder from "../../../assets/image-placeholder.svg";
 import { formatDate } from "../../../utilities/dateUtilities.js";
 import { CategorySortBy } from "../../../sorting/categorySortBy.js";
@@ -94,43 +97,69 @@ function CategoriesTable({
         </TableHead>
 
         <TableBody>
-          {categories.map((category) => (
-            <TableRow key={category.id} hover>
-              <TableCell>
-                <Avatar
-                  src={imagePlaceholder}
-                  alt={category.name}
-                  variant={"rounded"}
-                />
-              </TableCell>
-
-              <TableCell sx={{ fontWeight: "bold" }}>{category.name}</TableCell>
-
-              <TableCell>{category.itemsCount} items</TableCell>
-
-              <TableCell>{formatDate(category.createdAtUtc)}</TableCell>
-
-              <TableCell align={"right"}>
-                <Tooltip title={"Details"}>
-                  <IconButton size={"small"} color={"primary"}>
-                    <VisibilityIcon fontSize={"small"} />
-                  </IconButton>
-                </Tooltip>
-
-                <Tooltip title={"Edit"}>
-                  <IconButton size={"small"}>
-                    <EditIcon fontSize={"small"} />
-                  </IconButton>
-                </Tooltip>
-
-                <Tooltip title={"Delete"}>
-                  <IconButton size={"small"} color={"error"}>
-                    <DeleteIcon fontSize={"small"} />
-                  </IconButton>
-                </Tooltip>
+          {categories.length === 0 ? (
+            <TableRow>
+              <TableCell colSpan={5} align="center" sx={{ py: 4 }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: 1,
+                    color: "text.secondary",
+                  }}
+                >
+                  <CategoryIcon sx={{ fontSize: 48, opacity: 0.4 }} />
+                  <Typography variant="body1" fontWeight="bold">
+                    No categories found
+                  </Typography>
+                  <Typography variant="body2">
+                    Try adjusting your search or add a new category
+                  </Typography>
+                </Box>
               </TableCell>
             </TableRow>
-          ))}
+          ) : (
+            categories.map((category) => (
+              <TableRow key={category.id} hover>
+                <TableCell>
+                  <Avatar
+                    src={imagePlaceholder}
+                    alt={category.name}
+                    variant={"rounded"}
+                  />
+                </TableCell>
+
+                <TableCell sx={{ fontWeight: "bold" }}>
+                  {category.name}
+                </TableCell>
+
+                <TableCell>{category.itemsCount} items</TableCell>
+
+                <TableCell>{formatDate(category.createdAtUtc)}</TableCell>
+
+                <TableCell align={"right"}>
+                  <Tooltip title={"Details"}>
+                    <IconButton size={"small"} color={"primary"}>
+                      <VisibilityIcon fontSize={"small"} />
+                    </IconButton>
+                  </Tooltip>
+
+                  <Tooltip title={"Edit"}>
+                    <IconButton size={"small"}>
+                      <EditIcon fontSize={"small"} />
+                    </IconButton>
+                  </Tooltip>
+
+                  <Tooltip title={"Delete"}>
+                    <IconButton size={"small"} color={"error"}>
+                      <DeleteIcon fontSize={"small"} />
+                    </IconButton>
+                  </Tooltip>
+                </TableCell>
+              </TableRow>
+            ))
+          )}
         </TableBody>
       </Table>
       <TablePagination
