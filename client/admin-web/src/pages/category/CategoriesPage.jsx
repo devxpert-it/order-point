@@ -3,13 +3,14 @@ import CategoryIcon from "@mui/icons-material/Category";
 import { useState } from "react";
 import { useCategoryApiService } from "../../api/hooks/useCategoryApiService.js";
 import PageHeader from "../../components/PageHeader.jsx";
-import LoadingSpinner from "../../components/LoadingSpinner.jsx";
 import TopCategoriesGrid from "./components/TopCategoriesGrid.jsx";
 import CategoriesTable from "./components/CategoriesTable.jsx";
 import ErrorPaper from "../../components/ErrorPaper.jsx";
 import { CategorySortBy } from "../../sorting/categorySortBy.js";
 import CategoriesTableActions from "./components/CategoriesTableActions.jsx";
 import { useDebounce } from "use-debounce";
+import TopCategoriesGridSkeleton from "./components/TopCategoriesGridSkeleton.jsx";
+import CategoriesTableSkeleton from "./components/CategoriesTableSkeleton.jsx";
 
 function CategoriesPage() {
   const [pageNumber, setPageNumber] = useState(0);
@@ -75,7 +76,7 @@ function CategoriesPage() {
       />
 
       <Box sx={{ mb: 3 }}>
-        {isLoadingTop && <LoadingSpinner />}
+        {isLoadingTop && <TopCategoriesGridSkeleton />}
         {!isLoadingTop && isErrorTop && <ErrorPaper error={errorTop} />}
         {!isLoadingTop && !isErrorTop && (
           <TopCategoriesGrid categories={topCategories} />
@@ -89,9 +90,8 @@ function CategoriesPage() {
           console.log("add category");
         }}
       />
-
       <Box>
-        {isLoadingAll && <LoadingSpinner />}
+        {isLoadingAll && <CategoriesTableSkeleton />}
         {!isLoadingAll && isErrorAll && <ErrorPaper error={errorAll} />}
         {!isLoadingAll && !isErrorAll && (
           <CategoriesTable
