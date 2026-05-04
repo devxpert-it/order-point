@@ -2,7 +2,7 @@ import { Grid, Paper, Skeleton } from "@mui/material";
 
 function TopCategoriesGridSkeleton() {
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} sx={{ mb: 3 }}>
       {Array.from({ length: 5 }).map((_, i) => (
         <Grid size={12 / 5} key={i}>
           <Paper

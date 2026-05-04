@@ -5,10 +5,8 @@ import { useCategoryApiService } from "../../api/hooks/useCategoryApiService.js"
 import PageHeader from "../../components/PageHeader.jsx";
 import TopCategoriesGrid from "./components/TopCategoriesGrid.jsx";
 import CategoriesTable from "./components/CategoriesTable.jsx";
-import ApiErrorMessage from "../../components/ApiErrorMessage.jsx";
 import { CategorySortBy } from "../../sorting/categorySortBy.js";
 import { useDebounce } from "use-debounce";
-import TopCategoriesGridSkeleton from "./components/TopCategoriesGridSkeleton.jsx";
 
 function CategoriesPage() {
   const [pageNumber, setPageNumber] = useState(0);
@@ -73,13 +71,12 @@ function CategoriesPage() {
         }}
       />
 
-      <Box sx={{ mb: 3 }}>
-        {isLoadingTop && <TopCategoriesGridSkeleton />}
-        {!isLoadingTop && isErrorTop && <ApiErrorMessage error={errorTop} />}
-        {!isLoadingTop && !isErrorTop && (
-          <TopCategoriesGrid categories={topCategories} />
-        )}
-      </Box>
+      <TopCategoriesGrid
+        categories={topCategories}
+        isLoading={isLoadingTop}
+        isError={isErrorTop}
+        error={errorTop}
+      />
 
       <CategoriesTable
         categories={categories}

@@ -117,21 +117,13 @@ function DataTable({
                     color: "text.secondary",
                   }}
                 >
-                  {emptyState?.icon && (
-                    <Box sx={{ fontSize: 48, opacity: 0.4 }}>
-                      {emptyState.icon}
-                    </Box>
-                  )}
-                  {emptyState?.title && (
-                    <Typography variant={"body1"} fontWeight={"bold"}>
-                      {emptyState.title}
-                    </Typography>
-                  )}
-                  {emptyState?.description && (
-                    <Typography variant={"body2"}>
-                      {emptyState.description}
-                    </Typography>
-                  )}
+                  <Box sx={{ fontSize: 48 }}>{emptyState.icon}</Box>
+                  <Typography variant={"body1"} fontWeight={"bold"}>
+                    {emptyState.title}
+                  </Typography>
+                  <Typography variant={"body2"}>
+                    {emptyState.description}
+                  </Typography>
                 </Box>
               </TableCell>
             </TableRow>

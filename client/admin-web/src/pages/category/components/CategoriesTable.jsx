@@ -96,7 +96,9 @@ function CategoriesTable({
       />
 
       {isLoading && <CategoriesTableSkeleton />}
+
       {!isLoading && isError && <ApiErrorMessage error={error} />}
+
       {!isLoading && !isError && (
         <DataTable
           columns={columns}

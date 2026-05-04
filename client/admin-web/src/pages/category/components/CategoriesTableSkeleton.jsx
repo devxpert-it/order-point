@@ -17,7 +17,7 @@ function CategoriesTableSkeleton() {
           <TableRow>
             {Array.from({ length: 5 }).map((_, i) => (
               <TableCell key={i}>
-                <Skeleton variant="rounded" height={16} />
+                <Skeleton variant={"rounded"} height={16} />
               </TableCell>
             ))}
           </TableRow>
@@ -26,20 +26,20 @@ function CategoriesTableSkeleton() {
           {Array.from({ length: 5 }).map((_, rowIndex) => (
             <TableRow key={rowIndex}>
               <TableCell>
-                <Skeleton variant="rounded" height={40} width={40} />
+                <Skeleton variant={"rounded"} height={40} width={40} />
               </TableCell>
               <TableCell>
-                <Skeleton variant="rounded" height={16} width={100} />
+                <Skeleton variant={"rounded"} height={16} width={100} />
               </TableCell>
               <TableCell>
-                <Skeleton variant="rounded" height={16} width={100} />
+                <Skeleton variant={"rounded"} height={16} width={100} />
               </TableCell>
               <TableCell>
-                <Skeleton variant="rounded" height={16} width={100} />
+                <Skeleton variant={"rounded"} height={16} width={100} />
               </TableCell>
-              <TableCell align="right">
+              <TableCell align={"right"}>
                 <Skeleton
-                  variant="rounded"
+                  variant={"rounded"}
                   height={16}
                   width={100}
                   sx={{ ml: "auto" }}
