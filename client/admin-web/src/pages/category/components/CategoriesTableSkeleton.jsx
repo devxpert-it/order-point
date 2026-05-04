@@ -13,13 +13,14 @@ function CategoriesTableSkeleton() {
   return (
     <TableContainer component={Paper}>
       <Table>
-        <TableHead>
+        <TableHead sx={{ "& .MuiTableCell-root": { fontSize: 12 } }}>
           <TableRow>
-            {Array.from({ length: 5 }).map((_, i) => (
-              <TableCell key={i}>
-                <Skeleton variant={"rounded"} height={16} />
-              </TableCell>
-            ))}
+            <TableCell></TableCell>
+            <TableCell>Name</TableCell>
+            <TableCell>Status</TableCell>
+            <TableCell>Items count</TableCell>
+            <TableCell>Created at</TableCell>
+            <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -38,12 +39,7 @@ function CategoriesTableSkeleton() {
                 <Skeleton variant={"rounded"} height={16} width={100} />
               </TableCell>
               <TableCell align={"right"}>
-                <Skeleton
-                  variant={"rounded"}
-                  height={16}
-                  width={100}
-                  sx={{ ml: "auto" }}
-                />
+                <Skeleton variant={"rounded"} height={16} width={100} />
               </TableCell>
             </TableRow>
           ))}

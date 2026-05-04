@@ -11,6 +11,7 @@ import DataTableActions from "../../../components/DataTableActions.jsx";
 import { Box, Chip } from "@mui/material";
 import CategoriesTableSkeleton from "./CategoriesTableSkeleton.jsx";
 import ApiErrorMessage from "../../../components/ApiErrorMessage.jsx";
+import { useNavigate } from "react-router-dom";
 
 function CategoriesTable({
   categories,
@@ -28,6 +29,8 @@ function CategoriesTable({
   isError,
   error,
 }) {
+  const navigate = useNavigate();
+
   const columns = [
     {
       key: "avatar",
@@ -49,6 +52,7 @@ function CategoriesTable({
       render: (row) => (
         <Chip
           label={row.status}
+          size={"small"}
           sx={{
             backgroundColor: row.status === "Active" ? "#c8f1c9" : "#fbd8db",
             color: row.status === "Active" ? "#2e7d32" : "#c62828",
@@ -79,7 +83,7 @@ function CategoriesTable({
       label: "Details",
       icon: <VisibilityIcon fontSize="small" />,
       color: "primary",
-      onClick: (row) => console.log("details", row),
+      onClick: (row) => navigate(`/categories/${row.id}`),
     },
     {
       label: "Edit",
@@ -95,7 +99,7 @@ function CategoriesTable({
   ];
 
   const emptyState = {
-    icon: <CategoryIcon sx={{ fontSize: 48, opacity: 0.4 }} />,
+    icon: <CategoryIcon sx={{ fontSize: 48 }} />,
     title: "No categories found",
     description: "Try adjusting your search or add a new category",
   };
