@@ -26,7 +26,7 @@ function TopCategoriesGrid({ categories, isLoading, isError, error }) {
                   src={imagePlaceholder}
                   alt={`${category.name} image`}
                   variant={"rounded"}
-                  sx={{ width: 50, height: 50, marginBottom: 1 }}
+                  sx={{ width: 50, height: 50, mb: 1 }}
                 />
 
                 <Typography

@@ -1,4 +1,3 @@
-import DashboardIcon from "@mui/icons-material/Dashboard";
 import { Link as RouterLink } from "react-router-dom";
 import { Box, Breadcrumbs, Link, Typography } from "@mui/material";
 
@@ -17,7 +16,6 @@ function PageHeader({ title, breadcrumbs = [], currentPage }) {
           sx={{ display: "flex", alignItems: "center" }}
           color={"inherit"}
         >
-          <DashboardIcon sx={{ mr: 0.5 }} fontSize={"inherit"} />
           Dashboard
         </Link>
 
@@ -30,11 +28,6 @@ function PageHeader({ title, breadcrumbs = [], currentPage }) {
             sx={{ display: "flex", alignItems: "center" }}
             color={"inherit"}
           >
-            {crumb.icon && (
-              <Box component={"span"} sx={{ mr: 0.5, display: "flex" }}>
-                {crumb.icon}
-              </Box>
-            )}
             {crumb.label}
           </Link>
         ))}
@@ -47,11 +40,6 @@ function PageHeader({ title, breadcrumbs = [], currentPage }) {
             fontSize: 12,
           }}
         >
-          {currentPage.icon && (
-            <Box component={"span"} sx={{ mr: 0.5, display: "flex" }}>
-              {currentPage.icon}
-            </Box>
-          )}
           {currentPage.label}
         </Typography>
       </Breadcrumbs>

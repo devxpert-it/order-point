@@ -12,3 +12,9 @@ export const getCategories = async ({
 
   return data;
 };
+
+export const getCategory = async (id) => {
+  const { data } = await apiClient.get(`/categories/${id}`);
+
+  return data;
+};

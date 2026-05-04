@@ -81,18 +81,18 @@ function CategoriesTable({
   const rowActions = [
     {
       label: "Details",
-      icon: <VisibilityIcon fontSize="small" />,
+      icon: <VisibilityIcon fontSize={"small"} />,
       color: "primary",
       onClick: (row) => navigate(`/categories/${row.id}`),
     },
     {
       label: "Edit",
-      icon: <EditIcon fontSize="small" />,
+      icon: <EditIcon fontSize={"small"} />,
       onClick: (row) => console.log("edit", row),
     },
     {
       label: "Delete",
-      icon: <DeleteIcon fontSize="small" />,
+      icon: <DeleteIcon fontSize={"small"} />,
       color: "error",
       onClick: (row) => console.log("delete", row),
     },

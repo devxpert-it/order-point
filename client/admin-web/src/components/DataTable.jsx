@@ -52,7 +52,14 @@ function DataTable({
   return (
     <TableContainer component={Paper}>
       <Table>
-        <TableHead sx={{ "& .MuiTableCell-root": { fontSize: 12 } }}>
+        <TableHead
+          sx={{
+            "& .MuiTableCell-root": {
+              fontSize: 12,
+              py: 1,
+            },
+          }}
+        >
           <TableRow>
             {columns.map((column) => {
               const sortable =

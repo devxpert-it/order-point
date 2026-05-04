@@ -1,7 +1,6 @@
 import { Box } from "@mui/material";
-import CategoryIcon from "@mui/icons-material/Category";
 import { useState } from "react";
-import { useCategoryApiService } from "../../api/hooks/useCategoryApiService.js";
+import { useGetCategories } from "../../api/hooks/useCategoryApiService.js";
 import PageHeader from "../../components/PageHeader.jsx";
 import TopCategoriesGrid from "./components/TopCategoriesGrid.jsx";
 import CategoriesTable from "./components/CategoriesTable.jsx";
@@ -20,7 +19,7 @@ function CategoriesPage() {
     isLoading: isLoadingAll,
     isError: isErrorAll,
     error: errorAll,
-  } = useCategoryApiService({
+  } = useGetCategories({
     pageNumber: pageNumber + 1,
     pageSize,
     sortBy,
@@ -32,7 +31,7 @@ function CategoriesPage() {
     isLoading: isLoadingTop,
     isError: isErrorTop,
     error: errorTop,
-  } = useCategoryApiService({
+  } = useGetCategories({
     pageNumber: 1,
     pageSize: 5,
     sortBy: CategorySortBy.NameAsc,
@@ -67,7 +66,6 @@ function CategoriesPage() {
         title={"Categories"}
         currentPage={{
           label: "Categories",
-          icon: <CategoryIcon fontSize="inherit" />,
         }}
       />
 

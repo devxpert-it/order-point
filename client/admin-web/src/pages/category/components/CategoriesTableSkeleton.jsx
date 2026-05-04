@@ -13,7 +13,7 @@ function CategoriesTableSkeleton() {
   return (
     <TableContainer component={Paper}>
       <Table>
-        <TableHead sx={{ "& .MuiTableCell-root": { fontSize: 12 } }}>
+        <TableHead sx={{ "& .MuiTableCell-root": { fontSize: 12, py: 1 } }}>
           <TableRow>
             <TableCell></TableCell>
             <TableCell>Name</TableCell>
