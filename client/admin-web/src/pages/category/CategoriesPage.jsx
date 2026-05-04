@@ -7,10 +7,8 @@ import TopCategoriesGrid from "./components/TopCategoriesGrid.jsx";
 import CategoriesTable from "./components/CategoriesTable.jsx";
 import ApiErrorMessage from "../../components/ApiErrorMessage.jsx";
 import { CategorySortBy } from "../../sorting/categorySortBy.js";
-import CategoriesTableActions from "./components/CategoriesTableActions.jsx";
 import { useDebounce } from "use-debounce";
 import TopCategoriesGridSkeleton from "./components/TopCategoriesGridSkeleton.jsx";
-import CategoriesTableSkeleton from "./components/CategoriesTableSkeleton.jsx";
 
 function CategoriesPage() {
   const [pageNumber, setPageNumber] = useState(0);
@@ -83,30 +81,22 @@ function CategoriesPage() {
         )}
       </Box>
 
-      <CategoriesTableActions
+      <CategoriesTable
+        categories={categories}
+        totalCount={totalCount}
+        pageNumber={pageNumber}
+        pageSize={pageSize}
+        onPageChange={handleChangePageNumber}
+        onPageSizeChange={handleChangePageSize}
+        sortBy={sortBy}
+        onSortByChange={handleSortByChange}
         searchQuery={searchQuery}
         onSearchChange={handleSearchChange}
-        onAdd={() => {
-          console.log("add category");
-        }}
+        onAdd={() => console.log("add category")}
+        isLoading={isLoadingAll}
+        isError={isErrorAll}
+        error={errorAll}
       />
-
-      <Box>
-        {isLoadingAll && <CategoriesTableSkeleton />}
-        {!isLoadingAll && isErrorAll && <ApiErrorMessage error={errorAll} />}
-        {!isLoadingAll && !isErrorAll && (
-          <CategoriesTable
-            categories={categories}
-            totalCount={totalCount}
-            pageNumber={pageNumber}
-            pageSize={pageSize}
-            onPageChange={handleChangePageNumber}
-            onPageSizeChange={handleChangePageSize}
-            sortBy={sortBy}
-            onSortByChange={handleSortByChange}
-          />
-        )}
-      </Box>
     </Box>
   );
 }

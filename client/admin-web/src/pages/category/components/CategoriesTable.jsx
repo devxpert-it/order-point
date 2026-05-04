@@ -7,6 +7,10 @@ import imagePlaceholder from "../../../assets/image-placeholder.svg";
 import { formatDate } from "../../../utilities/dateUtilities.js";
 import { CategorySortBy } from "../../../sorting/categorySortBy.js";
 import DataTable from "../../../components/DataTable.jsx";
+import DataTableActions from "../../../components/DataTableActions.jsx";
+import { Box } from "@mui/material";
+import CategoriesTableSkeleton from "./CategoriesTableSkeleton.jsx";
+import ApiErrorMessage from "../../../components/ApiErrorMessage.jsx";
 
 const columns = [
   {
@@ -74,22 +78,42 @@ function CategoriesTable({
   onPageSizeChange,
   sortBy,
   onSortByChange,
+  searchQuery,
+  onSearchChange,
+  onAdd,
+  isLoading,
+  isError,
+  error,
 }) {
   return (
-    <DataTable
-      columns={columns}
-      rows={categories}
-      getRowId={(row) => row.id}
-      rowActions={rowActions}
-      emptyState={emptyState}
-      totalCount={totalCount}
-      pageNumber={pageNumber}
-      pageSize={pageSize}
-      onPageChange={onPageChange}
-      onPageSizeChange={onPageSizeChange}
-      sortBy={sortBy}
-      onSortByChange={onSortByChange}
-    />
+    <Box>
+      <DataTableActions
+        searchQuery={searchQuery}
+        onSearchChange={onSearchChange}
+        searchPlaceholder={"Search categories..."}
+        onAdd={onAdd}
+        addLabel={"Add category"}
+      />
+
+      {isLoading && <CategoriesTableSkeleton />}
+      {!isLoading && isError && <ApiErrorMessage error={error} />}
+      {!isLoading && !isError && (
+        <DataTable
+          columns={columns}
+          rows={categories}
+          getRowId={(row) => row.id}
+          rowActions={rowActions}
+          emptyState={emptyState}
+          totalCount={totalCount}
+          pageNumber={pageNumber}
+          pageSize={pageSize}
+          onPageChange={onPageChange}
+          onPageSizeChange={onPageSizeChange}
+          sortBy={sortBy}
+          onSortByChange={onSortByChange}
+        />
+      )}
+    </Box>
   );
 }
 

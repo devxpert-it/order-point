@@ -9,7 +9,13 @@ import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from "@mui/icons-material/Clear";
 
-function CategoriesTableActions({ searchQuery, onSearchChange, onAdd }) {
+function DataTableActions({
+  searchQuery,
+  onSearchChange,
+  searchPlaceholder,
+  onAdd,
+  addLabel,
+}) {
   return (
     <Stack
       direction={"row"}
@@ -18,7 +24,7 @@ function CategoriesTableActions({ searchQuery, onSearchChange, onAdd }) {
       <TextField
         size={"small"}
         variant={"outlined"}
-        placeholder={"Search categories..."}
+        placeholder={searchPlaceholder}
         value={searchQuery}
         onChange={(e) => onSearchChange(e.target.value)}
         slotProps={{
@@ -41,10 +47,10 @@ function CategoriesTableActions({ searchQuery, onSearchChange, onAdd }) {
       />
 
       <Button variant={"contained"} startIcon={<AddIcon />} onClick={onAdd}>
-        Add category
+        {addLabel}
       </Button>
     </Stack>
   );
 }
 
-export default CategoriesTableActions;
+export default DataTableActions;
