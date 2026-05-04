@@ -9,15 +9,15 @@ function PageHeader({ title, breadcrumbs = [], currentPage }) {
         {title}
       </Typography>
 
-      <Breadcrumbs separator="›" sx={{ fontSize: 12 }}>
+      <Breadcrumbs separator={"›"} sx={{ fontSize: 12 }}>
         <Link
           component={RouterLink}
-          to="/"
+          to={"/"}
           underline={"hover"}
           sx={{ display: "flex", alignItems: "center" }}
           color={"inherit"}
         >
-          <DashboardIcon sx={{ mr: 0.5 }} fontSize="inherit" />
+          <DashboardIcon sx={{ mr: 0.5 }} fontSize={"inherit"} />
           Dashboard
         </Link>
 

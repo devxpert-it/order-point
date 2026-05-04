@@ -1,19 +1,4 @@
-import {
-  Avatar,
-  Box,
-  IconButton,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TablePagination,
-  TableRow,
-  TableSortLabel,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import Avatar from "@mui/material/Avatar";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -21,6 +6,64 @@ import CategoryIcon from "@mui/icons-material/Category";
 import imagePlaceholder from "../../../assets/image-placeholder.svg";
 import { formatDate } from "../../../utilities/dateUtilities.js";
 import { CategorySortBy } from "../../../sorting/categorySortBy.js";
+import DataTable from "../../../components/DataTable.jsx";
+
+const columns = [
+  {
+    key: "avatar",
+    label: "",
+    render: (row) => (
+      <Avatar src={imagePlaceholder} alt={row.name} variant="rounded" />
+    ),
+  },
+  {
+    key: "name",
+    label: "Name",
+    render: (row) => <span style={{ fontWeight: "bold" }}>{row.name}</span>,
+    sortAscValue: CategorySortBy.NameAsc,
+    sortDescValue: CategorySortBy.NameDesc,
+  },
+  {
+    key: "itemsCount",
+    label: "Items count",
+    render: (row) => `${row.itemsCount} items`,
+    sortAscValue: CategorySortBy.ItemsCountAsc,
+    sortDescValue: CategorySortBy.ItemsCountDesc,
+  },
+  {
+    key: "createdAtUtc",
+    label: "Created at",
+    render: (row) => formatDate(row.createdAtUtc),
+    sortAscValue: CategorySortBy.CreatedAtAsc,
+    sortDescValue: CategorySortBy.CreatedAtDesc,
+  },
+];
+
+const rowActions = [
+  {
+    label: "Details",
+    icon: <VisibilityIcon fontSize="small" />,
+    color: "primary",
+    onClick: (row) => console.log("details", row),
+  },
+  {
+    label: "Edit",
+    icon: <EditIcon fontSize="small" />,
+    onClick: (row) => console.log("edit", row),
+  },
+  {
+    label: "Delete",
+    icon: <DeleteIcon fontSize="small" />,
+    color: "error",
+    onClick: (row) => console.log("delete", row),
+  },
+];
+
+const emptyState = {
+  icon: <CategoryIcon sx={{ fontSize: 48, opacity: 0.4 }} />,
+  title: "No categories found",
+  description: "Try adjusting your search or add a new category",
+};
 
 function CategoriesTable({
   categories,
@@ -32,149 +75,21 @@ function CategoriesTable({
   sortBy,
   onSortByChange,
 }) {
-  const sortColumns = [
-    {
-      label: "Name",
-      ascValue: CategorySortBy.NameAsc,
-      descValue: CategorySortBy.NameDesc,
-    },
-    {
-      label: "Items count",
-      ascValue: CategorySortBy.ItemsCountAsc,
-      descValue: CategorySortBy.ItemsCountDesc,
-    },
-    {
-      label: "Created at",
-      ascValue: CategorySortBy.CreatedAtAsc,
-      descValue: CategorySortBy.CreatedAtDesc,
-    },
-  ];
-
-  function getDirection(sortBy, ascValue, descValue) {
-    if (sortBy === ascValue) return "asc";
-    if (sortBy === descValue) return "desc";
-    return "desc";
-  }
-
-  function isActive(sortBy, ascValue, descValue) {
-    return sortBy === ascValue || sortBy === descValue;
-  }
-
-  const handleSortBy = (ascValue, descValue) => {
-    if (sortBy === ascValue) {
-      onSortByChange(descValue);
-    } else {
-      onSortByChange(ascValue);
-    }
-  };
-
   return (
-    <TableContainer component={Paper}>
-      <Table>
-        <TableHead sx={{ "& .MuiTableCell-root": { fontSize: 12 } }}>
-          <TableRow>
-            <TableCell />
-            {sortColumns.map((col) => (
-              <TableCell
-                key={col.label}
-                sortDirection={getDirection(
-                  sortBy,
-                  col.ascValue,
-                  col.descValue,
-                )}
-              >
-                <TableSortLabel
-                  active={isActive(sortBy, col.ascValue, col.descValue)}
-                  direction={getDirection(sortBy, col.ascValue, col.descValue)}
-                  onClick={() => handleSortBy(col.ascValue, col.descValue)}
-                >
-                  {col.label}
-                </TableSortLabel>
-              </TableCell>
-            ))}
-            <TableCell />
-          </TableRow>
-        </TableHead>
-
-        <TableBody>
-          {categories.length === 0 ? (
-            <TableRow>
-              <TableCell colSpan={5} align={"center"} sx={{ py: 4 }}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    gap: 1,
-                    color: "text.secondary",
-                  }}
-                >
-                  <CategoryIcon sx={{ fontSize: 48, opacity: 0.4 }} />
-                  <Typography variant="body1" fontWeight="bold">
-                    No categories found
-                  </Typography>
-                  <Typography variant="body2">
-                    Try adjusting your search or add a new category
-                  </Typography>
-                </Box>
-              </TableCell>
-            </TableRow>
-          ) : (
-            categories.map((category) => (
-              <TableRow key={category.id} hover>
-                <TableCell>
-                  <Avatar
-                    src={imagePlaceholder}
-                    alt={category.name}
-                    variant={"rounded"}
-                  />
-                </TableCell>
-
-                <TableCell sx={{ fontWeight: "bold" }}>
-                  {category.name}
-                </TableCell>
-
-                <TableCell>{category.itemsCount} items</TableCell>
-
-                <TableCell>{formatDate(category.createdAtUtc)}</TableCell>
-
-                <TableCell align={"right"}>
-                  <Tooltip title={"Details"}>
-                    <IconButton size={"small"} color={"primary"}>
-                      <VisibilityIcon fontSize={"small"} />
-                    </IconButton>
-                  </Tooltip>
-
-                  <Tooltip title={"Edit"}>
-                    <IconButton size={"small"}>
-                      <EditIcon fontSize={"small"} />
-                    </IconButton>
-                  </Tooltip>
-
-                  <Tooltip title={"Delete"}>
-                    <IconButton size={"small"} color={"error"}>
-                      <DeleteIcon fontSize={"small"} />
-                    </IconButton>
-                  </Tooltip>
-                </TableCell>
-              </TableRow>
-            ))
-          )}
-        </TableBody>
-      </Table>
-      <TablePagination
-        component={"div"}
-        count={totalCount}
-        page={pageNumber}
-        rowsPerPage={pageSize}
-        onPageChange={onPageChange}
-        onRowsPerPageChange={onPageSizeChange}
-        rowsPerPageOptions={[10, 20, 30]}
-        labelDisplayedRows={({ from, to, count }) =>
-          `${from}–${to} of ${count} items`
-        }
-      />
-    </TableContainer>
+    <DataTable
+      columns={columns}
+      rows={categories}
+      getRowId={(row) => row.id}
+      rowActions={rowActions}
+      emptyState={emptyState}
+      totalCount={totalCount}
+      pageNumber={pageNumber}
+      pageSize={pageSize}
+      onPageChange={onPageChange}
+      onPageSizeChange={onPageSizeChange}
+      sortBy={sortBy}
+      onSortByChange={onSortByChange}
+    />
   );
 }
 
