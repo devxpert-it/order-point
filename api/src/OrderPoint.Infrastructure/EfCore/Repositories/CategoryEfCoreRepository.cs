@@ -36,6 +36,9 @@ internal sealed class CategoryEfCoreRepository(ApplicationDbContext dbContext) :
         return (categories.AsReadOnly(), totalCount);
     }
 
+    public async Task<Category?> GetAsync(Guid id) => await dbContext.Categories
+        .SingleOrDefaultAsync(category => category.Id == id);
+
     private static IQueryable<Category> SearchCategories(IQueryable<Category> query, string searchQuery)
     {
         string normalizedSearchQuery = searchQuery.ToLower();
