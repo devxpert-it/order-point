@@ -8,11 +8,12 @@ import { CategorySortBy } from "../../sorting/categorySortBy.js";
 import { useDebounce } from "use-debounce";
 
 function CategoriesPage() {
-  const [pageNumber, setPageNumber] = useState(1);
+  const [pageNumber, setPageNumber] = useState(0);
   const [pageSize, setPageSize] = useState(10);
-  const [sortBy, setSortBy] = useState(CategorySortBy.CreatedAtDesc);
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearchQuery] = useDebounce(searchQuery, 500);
+  const [status, setStatus] = useState("");
+  const [sortBy, setSortBy] = useState(CategorySortBy.CreatedAtDesc);
 
   const {
     data: responseAll,
@@ -20,10 +21,11 @@ function CategoriesPage() {
     isError: isErrorAll,
     error: errorAll,
   } = useGetCategories({
-    pageNumber: pageNumber,
+    pageNumber: pageNumber + 1,
     pageSize,
+    searchQuery: debouncedSearchQuery || null,
+    status: status !== "" ? status : null,
     sortBy,
-    searchQuery: debouncedSearchQuery,
   });
 
   const {
@@ -47,17 +49,22 @@ function CategoriesPage() {
 
   const handleChangePageSize = (e) => {
     setPageSize(parseInt(e.target.value, 10));
-    setPageNumber(1);
-  };
-
-  const handleSortByChange = (value) => {
-    setSortBy(value);
-    setPageNumber(1);
+    setPageNumber(0);
   };
 
   const handleSearchChange = (value) => {
     setSearchQuery(value);
-    setPageNumber(1);
+    setPageNumber(0);
+  };
+
+  const handleStatusChange = (value) => {
+    setStatus(value);
+    setPageNumber(0);
+  };
+
+  const handleSortByChange = (value) => {
+    setSortBy(value);
+    setPageNumber(0);
   };
 
   return (
@@ -87,6 +94,8 @@ function CategoriesPage() {
         onSortByChange={handleSortByChange}
         searchQuery={searchQuery}
         onSearchChange={handleSearchChange}
+        status={status}
+        onStatusChange={handleStatusChange}
         onAdd={() => console.log("add category")}
         isLoading={isLoadingAll}
         isError={isErrorAll}

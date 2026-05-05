@@ -13,6 +13,7 @@ import CategoriesTableSkeleton from "./CategoriesTableSkeleton.jsx";
 import ApiErrorMessage from "../../../../components/ApiErrorMessage.jsx";
 import { useNavigate } from "react-router-dom";
 import CategoryStatusChip from "../shared/CategoryStatusChip.jsx";
+import CategoryFilters from "./CategoryFilters.jsx";
 
 function CategoriesTable({
   categories,
@@ -25,6 +26,8 @@ function CategoriesTable({
   onSortByChange,
   searchQuery,
   onSearchChange,
+  status,
+  onStatusChange,
   onAdd,
   isLoading,
   isError,
@@ -99,7 +102,10 @@ function CategoriesTable({
       <DataTableActions
         searchQuery={searchQuery}
         onSearchChange={onSearchChange}
-        searchPlaceholder={"Search categories..."}
+        searchPlaceholder={"Search"}
+        filters={
+          <CategoryFilters status={status} onStatusChange={onStatusChange} />
+        }
         onAdd={onAdd}
         addLabel={"Add category"}
       />

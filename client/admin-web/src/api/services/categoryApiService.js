@@ -4,10 +4,11 @@ export const getCategories = async ({
   pageNumber,
   pageSize,
   searchQuery,
+  status,
   sortBy,
 }) => {
   const { data } = await apiClient.get("/categories", {
-    params: { pageNumber, pageSize, searchQuery, sortBy },
+    params: { pageNumber, pageSize, searchQuery, status, sortBy },
   });
 
   return data;

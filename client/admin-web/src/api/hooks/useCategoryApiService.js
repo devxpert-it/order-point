@@ -5,15 +5,17 @@ export const useGetCategories = ({
   pageNumber,
   pageSize,
   searchQuery,
+  status,
   sortBy,
 }) => {
   return useQuery({
     queryKey: [
       "categories",
       "list",
-      { pageNumber, pageSize, searchQuery, sortBy },
+      { pageNumber, pageSize, searchQuery, status, sortBy },
     ],
-    queryFn: () => getCategories({ pageNumber, pageSize, searchQuery, sortBy }),
+    queryFn: () =>
+      getCategories({ pageNumber, pageSize, searchQuery, status, sortBy }),
   });
 };
 
