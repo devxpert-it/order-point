@@ -1,4 +1,3 @@
-import DashboardIcon from "@mui/icons-material/Dashboard";
 import { Link as RouterLink } from "react-router-dom";
 import { Box, Breadcrumbs, Link, Typography } from "@mui/material";
 
@@ -13,17 +12,17 @@ function PageHeader({ title, breadcrumbs = [], currentPage, actions }) {
       }}
     >
       <Box>
-        <Typography variant="h5" sx={{ mb: 1 }}>
+        <Typography variant={"h5"} sx={{ mb: 1 }}>
           {title}
         </Typography>
 
-        <Breadcrumbs separator="›" sx={{ fontSize: 12 }}>
+        <Breadcrumbs separator={"›"} sx={{ fontSize: 12 }}>
           <Link
             component={RouterLink}
-            to="/"
-            underline="hover"
+            to={"/"}
+            underline={"hover"}
             sx={{ display: "flex", alignItems: "center" }}
-            color="inherit"
+            color={"inherit"}
           >
             Dashboard
           </Link>
@@ -33,15 +32,10 @@ function PageHeader({ title, breadcrumbs = [], currentPage, actions }) {
               key={crumb.label}
               component={RouterLink}
               to={crumb.href}
-              underline="hover"
+              underline={"hover"}
               sx={{ display: "flex", alignItems: "center" }}
-              color="inherit"
+              color={"inherit"}
             >
-              {crumb.icon && (
-                <Box component="span" sx={{ mr: 0.5, display: "flex" }}>
-                  {crumb.icon}
-                </Box>
-              )}
               {crumb.label}
             </Link>
           ))}
@@ -54,11 +48,6 @@ function PageHeader({ title, breadcrumbs = [], currentPage, actions }) {
               fontSize: 12,
             }}
           >
-            {currentPage.icon && (
-              <Box component="span" sx={{ mr: 0.5, display: "flex" }}>
-                {currentPage.icon}
-              </Box>
-            )}
             {currentPage.label}
           </Typography>
         </Breadcrumbs>
