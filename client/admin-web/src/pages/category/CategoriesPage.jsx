@@ -8,7 +8,7 @@ import { CategorySortBy } from "../../sorting/categorySortBy.js";
 import { useDebounce } from "use-debounce";
 
 function CategoriesPage() {
-  const [pageNumber, setPageNumber] = useState(0);
+  const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [sortBy, setSortBy] = useState(CategorySortBy.CreatedAtDesc);
   const [searchQuery, setSearchQuery] = useState("");
@@ -20,7 +20,7 @@ function CategoriesPage() {
     isError: isErrorAll,
     error: errorAll,
   } = useGetCategories({
-    pageNumber: pageNumber + 1,
+    pageNumber: pageNumber,
     pageSize,
     sortBy,
     searchQuery: debouncedSearchQuery,
@@ -47,17 +47,17 @@ function CategoriesPage() {
 
   const handleChangePageSize = (e) => {
     setPageSize(parseInt(e.target.value, 10));
-    setPageNumber(0);
+    setPageNumber(1);
   };
 
   const handleSortByChange = (value) => {
     setSortBy(value);
-    setPageNumber(0);
+    setPageNumber(1);
   };
 
   const handleSearchChange = (value) => {
     setSearchQuery(value);
-    setPageNumber(0);
+    setPageNumber(1);
   };
 
   return (
