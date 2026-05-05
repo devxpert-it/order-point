@@ -1,4 +1,4 @@
-﻿namespace OrderPoint.Domain.Enumerations;
+﻿namespace OrderPoint.Domain.Sorting;
 
 public enum CategorySortBy
 {
