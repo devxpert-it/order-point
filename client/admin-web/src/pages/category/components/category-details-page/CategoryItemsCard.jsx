@@ -62,7 +62,11 @@ function CategoryItemsCard({ name }) {
           <TableBody>
             <TableRow>
               <TableCell>
-                <Avatar src={imagePlaceholder} alt={"Test"} variant="rounded" />
+                <Avatar
+                  src={imagePlaceholder}
+                  alt={"Test"}
+                  variant={"rounded"}
+                />
               </TableCell>
               <TableCell>
                 <Typography variant={"body1"}>Mojito</Typography>

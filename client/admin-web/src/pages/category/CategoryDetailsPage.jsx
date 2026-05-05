@@ -25,7 +25,7 @@ function CategoryDetailsPage() {
             actions={
               <Box>
                 <Button
-                  variant="outlined"
+                  variant={"outlined"}
                   startIcon={<EditIcon />}
                   onClick={() => console.log("edit")}
                   sx={{ mr: 1 }}
@@ -33,10 +33,10 @@ function CategoryDetailsPage() {
                   Edit
                 </Button>
                 <Button
-                  variant="outlined"
+                  variant={"outlined"}
                   startIcon={<DeleteIcon />}
                   onClick={() => console.log("delete")}
-                  color="error"
+                  color={"error"}
                 >
                   Delete
                 </Button>
