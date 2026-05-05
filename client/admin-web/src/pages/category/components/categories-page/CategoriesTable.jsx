@@ -3,16 +3,16 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CategoryIcon from "@mui/icons-material/Category";
-import imagePlaceholder from "../../../assets/image-placeholder.svg";
-import { formatDate } from "../../../utilities/dateUtilities.js";
-import { CategorySortBy } from "../../../sorting/categorySortBy.js";
-import DataTable from "../../../components/DataTable.jsx";
-import DataTableActions from "../../../components/DataTableActions.jsx";
+import imagePlaceholder from "../../../../assets/image-placeholder.svg";
+import { formatDate } from "../../../../utilities/dateUtilities.js";
+import { CategorySortBy } from "../../../../sorting/categorySortBy.js";
+import DataTable from "../../../../components/DataTable.jsx";
+import DataTableActions from "../../../../components/DataTableActions.jsx";
 import { Box } from "@mui/material";
 import CategoriesTableSkeleton from "./CategoriesTableSkeleton.jsx";
-import ApiErrorMessage from "../../../components/ApiErrorMessage.jsx";
+import ApiErrorMessage from "../../../../components/ApiErrorMessage.jsx";
 import { useNavigate } from "react-router-dom";
-import CategoryStatusChip from "./CategoryStatusChip.jsx";
+import CategoryStatusChip from "../shared/CategoryStatusChip.jsx";
 
 function CategoriesTable({
   categories,

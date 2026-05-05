@@ -2,8 +2,8 @@ import { Box } from "@mui/material";
 import { useState } from "react";
 import { useGetCategories } from "../../api/hooks/useCategoryApiService.js";
 import PageHeader from "../../components/PageHeader.jsx";
-import TopCategoriesGrid from "./components/TopCategoriesGrid.jsx";
-import CategoriesTable from "./components/CategoriesTable.jsx";
+import TopCategoriesGrid from "./components/categories-page/TopCategoriesGrid.jsx";
+import CategoriesTable from "./components/categories-page/CategoriesTable.jsx";
 import { CategorySortBy } from "../../sorting/categorySortBy.js";
 import { useDebounce } from "use-debounce";
 

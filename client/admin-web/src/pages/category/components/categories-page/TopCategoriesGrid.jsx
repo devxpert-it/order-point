@@ -1,7 +1,7 @@
 import { Avatar, Box, Grid, Paper, Typography } from "@mui/material";
-import imagePlaceholder from "../../../assets/image-placeholder.svg";
+import imagePlaceholder from "../../../../assets/image-placeholder.svg";
 import TopCategoriesGridSkeleton from "./TopCategoriesGridSkeleton.jsx";
-import ApiErrorMessage from "../../../components/ApiErrorMessage.jsx";
+import ApiErrorMessage from "../../../../components/ApiErrorMessage.jsx";
 
 function TopCategoriesGrid({ categories, isLoading, isError, error }) {
   return (
