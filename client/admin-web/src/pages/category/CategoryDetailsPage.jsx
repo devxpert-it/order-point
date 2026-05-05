@@ -1,6 +1,9 @@
 import { Box, Button, Grid } from "@mui/material";
-import { useParams } from "react-router-dom";
-import { useGetCategory } from "../../api/hooks/useCategoryApiService.js";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  useDeleteCategory,
+  useGetCategory,
+} from "../../api/hooks/useCategoryApiService.js";
 import PageHeader from "../../components/PageHeader.jsx";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -9,12 +12,33 @@ import CategoryInfoCard from "./components/category-details-page/CategoryInfoCar
 import CategoryItemsCard from "./components/category-details-page/CategoryItemsCard.jsx";
 import ApiErrorMessage from "../../components/ApiErrorMessage.jsx";
 import CategoryDetailsPageSkeleton from "./components/category-details-page/CategoryDetailsPageSkeleton.jsx";
+import ConfirmationDialog from "../../components/ConfirmationDialog.jsx";
+import { useConfirmationDialog } from "../../components/hooks/useConfirmationDialog.js";
 
 function CategoryDetailsPage() {
   const { id } = useParams();
 
+  const navigate = useNavigate();
+
   const { data: response, isLoading, isError, error } = useGetCategory(id);
   const category = response?.data;
+
+  const { mutate: deleteCategory, isPending: isDeleting } = useDeleteCategory();
+
+  const {
+    isOpen: isDialogOpen,
+    openDialog: openDeleteDialog,
+    closeDialog: closeDeleteDialog,
+  } = useConfirmationDialog();
+
+  const handleDeleteConfirm = () => {
+    deleteCategory(category.id, {
+      onSuccess: () => {
+        closeDeleteDialog();
+        navigate(`/categories`);
+      },
+    });
+  };
 
   return (
     <Box>
@@ -41,7 +65,7 @@ function CategoryDetailsPage() {
                 <Button
                   variant={"outlined"}
                   startIcon={<DeleteIcon />}
-                  onClick={() => console.log("delete")}
+                  onClick={openDeleteDialog}
                   color={"error"}
                 >
                   Delete
@@ -66,6 +90,19 @@ function CategoryDetailsPage() {
               <CategoryItemsCard name={category.name} />
             </Grid>
           </Grid>
+
+          <ConfirmationDialog
+            open={isDialogOpen}
+            title={"Delete category"}
+            message={`Are you sure you want to delete "${category.name}"? This action cannot be undone.`}
+            confirmLabel={"Delete"}
+            cancelLabel={"Cancel"}
+            confirmColor={"error"}
+            isPending={isDeleting}
+            pendingLabel={"Deleting..."}
+            onConfirm={handleDeleteConfirm}
+            onCancel={closeDeleteDialog}
+          />
         </Box>
       )}
     </Box>
