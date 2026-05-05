@@ -16,7 +16,11 @@ function CategoryDetailsCard({ category }) {
         sx={{ display: "flex", alignItems: "center" }}
       >
         <Grid size={3}>
-          <Typography variant={"body2"} color={"textSecondary"}>
+          <Typography
+            variant={"body2"}
+            color={"textSecondary"}
+            sx={{ display: "flex", alignItems: "center" }}
+          >
             <TagIcon sx={{ fontSize: 13, mr: 1 }} />
             ID
           </Typography>
@@ -27,7 +31,11 @@ function CategoryDetailsCard({ category }) {
         </Grid>
 
         <Grid size={3}>
-          <Typography variant={"body2"} color={"textSecondary"}>
+          <Typography
+            variant={"body2"}
+            color={"textSecondary"}
+            sx={{ display: "flex", alignItems: "center" }}
+          >
             <ShortTextIcon sx={{ fontSize: 13, mr: 1 }} />
             Name
           </Typography>
@@ -38,7 +46,11 @@ function CategoryDetailsCard({ category }) {
         </Grid>
 
         <Grid size={3}>
-          <Typography variant={"body2"} color={"textSecondary"}>
+          <Typography
+            variant={"body2"}
+            color={"textSecondary"}
+            sx={{ display: "flex", alignItems: "center" }}
+          >
             <NotesIcon sx={{ fontSize: 13, mr: 1 }} />
             Description
           </Typography>
@@ -49,7 +61,11 @@ function CategoryDetailsCard({ category }) {
         </Grid>
 
         <Grid size={3}>
-          <Typography variant={"body2"} color={"textSecondary"}>
+          <Typography
+            variant={"body2"}
+            color={"textSecondary"}
+            sx={{ display: "flex", alignItems: "center" }}
+          >
             <SignalWifiStatusbar4BarIcon sx={{ fontSize: 13, mr: 1 }} />
             Status
           </Typography>
@@ -60,7 +76,11 @@ function CategoryDetailsCard({ category }) {
         </Grid>
 
         <Grid size={3}>
-          <Typography variant={"body2"} color={"textSecondary"}>
+          <Typography
+            variant={"body2"}
+            color={"textSecondary"}
+            sx={{ display: "flex", alignItems: "center" }}
+          >
             <CalendarMonthIcon sx={{ fontSize: 13, mr: 1 }} />
             Created at
           </Typography>
@@ -73,7 +93,11 @@ function CategoryDetailsCard({ category }) {
         </Grid>
 
         <Grid size={3}>
-          <Typography variant={"body2"} color={"textSecondary"}>
+          <Typography
+            variant={"body2"}
+            color={"textSecondary"}
+            sx={{ display: "flex", alignItems: "center" }}
+          >
             <CalendarMonthIcon sx={{ fontSize: 13, mr: 1 }} />
             Updated at
           </Typography>
