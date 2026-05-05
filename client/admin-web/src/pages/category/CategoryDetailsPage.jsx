@@ -7,15 +7,21 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CategoryProfileCard from "./components/category-details-page/CategoryProfileCard.jsx";
 import CategoryInfoCard from "./components/category-details-page/CategoryInfoCard.jsx";
 import CategoryItemsCard from "./components/category-details-page/CategoryItemsCard.jsx";
+import ApiErrorMessage from "../../components/ApiErrorMessage.jsx";
+import CategoryDetailsPageSkeleton from "./components/category-details-page/CategoryDetailsPageSkeleton.jsx";
 
 function CategoryDetailsPage() {
   const { id } = useParams();
 
-  const { data: response, isLoading, isError } = useGetCategory(id);
+  const { data: response, isLoading, isError, error } = useGetCategory(id);
   const category = response?.data;
 
   return (
     <Box>
+      {isLoading && <CategoryDetailsPageSkeleton />}
+
+      {!isLoading && isError && <ApiErrorMessage error={error} />}
+
       {!isLoading && !isError && (
         <Box>
           <PageHeader
@@ -51,9 +57,11 @@ function CategoryDetailsPage() {
                 status={category.status}
               />
             </Grid>
+
             <Grid size={9}>
               <CategoryInfoCard category={category} />
             </Grid>
+
             <Grid size={12}>
               <CategoryItemsCard name={category.name} />
             </Grid>
