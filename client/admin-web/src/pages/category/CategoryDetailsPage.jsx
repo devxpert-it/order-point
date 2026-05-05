@@ -2,7 +2,6 @@ import {
   Avatar,
   Box,
   Button,
-  Chip,
   Grid,
   Paper,
   Table,
@@ -26,6 +25,7 @@ import NotesIcon from "@mui/icons-material/Notes";
 import SignalWifiStatusbar4BarIcon from "@mui/icons-material/SignalWifiStatusbar4Bar";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import NorthEastIcon from "@mui/icons-material/NorthEast";
+import CategoryStatusChip from "./components/CategoryStatusChip.jsx";
 
 function CategoryDetailsPage() {
   const { id } = useParams();
@@ -103,17 +103,7 @@ function CategoryDetailsPage() {
                   category
                 </Typography>
 
-                <Chip
-                  label={category.status}
-                  size={"small"}
-                  sx={{
-                    backgroundColor:
-                      category.status === "Active" ? "#c8f1c9" : "#fbd8db",
-                    color: category.status === "Active" ? "#2e7d32" : "#c62828",
-                    fontWeight: 600,
-                    fontSize: 12,
-                  }}
-                />
+                <CategoryStatusChip status={category.status} />
               </Paper>
             </Grid>
 
@@ -169,18 +159,7 @@ function CategoryDetailsPage() {
                   </Grid>
 
                   <Grid size={9}>
-                    <Chip
-                      label={category.status}
-                      size={"small"}
-                      sx={{
-                        backgroundColor:
-                          category.status === "Active" ? "#c8f1c9" : "#fbd8db",
-                        color:
-                          category.status === "Active" ? "#2e7d32" : "#c62828",
-                        fontWeight: 600,
-                        fontSize: 12,
-                      }}
-                    />
+                    <CategoryStatusChip status={category.status} />
                   </Grid>
 
                   <Grid size={3}>

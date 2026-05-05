@@ -8,10 +8,11 @@ import { formatDate } from "../../../utilities/dateUtilities.js";
 import { CategorySortBy } from "../../../sorting/categorySortBy.js";
 import DataTable from "../../../components/DataTable.jsx";
 import DataTableActions from "../../../components/DataTableActions.jsx";
-import { Box, Chip } from "@mui/material";
+import { Box } from "@mui/material";
 import CategoriesTableSkeleton from "./CategoriesTableSkeleton.jsx";
 import ApiErrorMessage from "../../../components/ApiErrorMessage.jsx";
 import { useNavigate } from "react-router-dom";
+import CategoryStatusChip from "./CategoryStatusChip.jsx";
 
 function CategoriesTable({
   categories,
@@ -52,18 +53,7 @@ function CategoriesTable({
       key: "status",
       label: "Status",
       width: 150,
-      render: (row) => (
-        <Chip
-          label={row.status}
-          size={"small"}
-          sx={{
-            backgroundColor: row.status === "Active" ? "#c8f1c9" : "#fbd8db",
-            color: row.status === "Active" ? "#2e7d32" : "#c62828",
-            fontWeight: 600,
-            fontSize: 12,
-          }}
-        />
-      ),
+      render: (row) => <CategoryStatusChip status={row.status} />,
     },
     {
       key: "itemsCount",
