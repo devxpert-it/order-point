@@ -11,11 +11,10 @@ function TopCategoriesGridSkeleton() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              gap: 1,
             }}
           >
-            <Skeleton variant="rounded" width={50} height={50} />
-            <Skeleton variant="rounded" width={80} height={16} />
+            <Skeleton variant="rounded" width={50} height={50} sx={{ mb: 1 }} />
+            <Skeleton variant="rounded" width={80} height={16} sx={{ mb: 1 }} />
             <Skeleton variant="rounded" width={50} height={14} />
           </Paper>
         </Grid>

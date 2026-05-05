@@ -9,37 +9,30 @@ import {
   TableRow,
 } from "@mui/material";
 
-function CategoriesTableSkeleton() {
+function CategoriesTableSkeleton({ columns }) {
   return (
     <TableContainer component={Paper}>
-      <Table>
+      <Table sx={{ tableLayout: "fixed" }}>
         <TableHead sx={{ "& .MuiTableCell-root": { fontSize: 12, py: 1 } }}>
           <TableRow>
-            <TableCell></TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Status</TableCell>
-            <TableCell>Items count</TableCell>
-            <TableCell>Created at</TableCell>
-            <TableCell></TableCell>
+            {columns.map((column) => (
+              <TableCell key={column.key} width={column.width}>
+                {column.label}
+              </TableCell>
+            ))}
+            <TableCell />
           </TableRow>
         </TableHead>
         <TableBody>
-          {Array.from({ length: 5 }).map((_, rowIndex) => (
+          {Array.from({ length: 1 }).map((_, rowIndex) => (
             <TableRow key={rowIndex}>
+              {columns.map((col) => (
+                <TableCell key={col.key}>
+                  <Skeleton variant={"rounded"} height={20} width={"100%"} />
+                </TableCell>
+              ))}
               <TableCell>
-                <Skeleton variant={"rounded"} height={40} width={40} />
-              </TableCell>
-              <TableCell>
-                <Skeleton variant={"rounded"} height={16} width={100} />
-              </TableCell>
-              <TableCell>
-                <Skeleton variant={"rounded"} height={16} width={100} />
-              </TableCell>
-              <TableCell>
-                <Skeleton variant={"rounded"} height={16} width={100} />
-              </TableCell>
-              <TableCell align={"right"}>
-                <Skeleton variant={"rounded"} height={16} width={100} />
+                <Skeleton variant={"rounded"} height={20} width={"100%"} />
               </TableCell>
             </TableRow>
           ))}

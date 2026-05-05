@@ -51,7 +51,7 @@ function DataTable({
 
   return (
     <TableContainer component={Paper}>
-      <Table>
+      <Table sx={{ tableLayout: "fixed" }}>
         <TableHead
           sx={{
             "& .MuiTableCell-root": {
@@ -68,6 +68,7 @@ function DataTable({
                 column.sortDescValue != null;
               return (
                 <TableCell
+                  width={column.width}
                   key={column.key}
                   sortDirection={
                     sortable
