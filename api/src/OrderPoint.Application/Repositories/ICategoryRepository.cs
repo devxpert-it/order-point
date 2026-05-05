@@ -14,5 +14,7 @@ public interface ICategoryRepository
         CategorySortBy? sortBy = null,
         CancellationToken cancellationToken = default);
 
-    Task<Category?> GetAsync(Guid id);
+    Task<Category?> GetAsync(Guid id, CancellationToken cancellationToken = default);
+
+    void Delete(Category category);
 }
