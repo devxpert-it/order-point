@@ -36,15 +36,13 @@ function CategoriesTable({
     {
       key: "avatar",
       label: "",
-      width: 80,
       render: (row) => (
-        <Avatar src={imagePlaceholder} alt={row.name} variant="rounded" />
+        <Avatar src={imagePlaceholder} alt={row.name} variant={"rounded"} />
       ),
     },
     {
       key: "name",
       label: "Name",
-      width: 200,
       render: (row) => <span style={{ fontWeight: "bold" }}>{row.name}</span>,
       sortAscValue: CategorySortBy.NameAsc,
       sortDescValue: CategorySortBy.NameDesc,
@@ -52,13 +50,11 @@ function CategoriesTable({
     {
       key: "status",
       label: "Status",
-      width: 150,
       render: (row) => <CategoryStatusChip status={row.status} />,
     },
     {
       key: "itemsCount",
       label: "Items count",
-      width: 150,
       render: (row) => `${row.itemsCount} items`,
       sortAscValue: CategorySortBy.ItemsCountAsc,
       sortDescValue: CategorySortBy.ItemsCountDesc,
@@ -66,7 +62,6 @@ function CategoriesTable({
     {
       key: "createdAtUtc",
       label: "Created at",
-      width: 150,
       render: (row) => formatDate(row.createdAtUtc),
       sortAscValue: CategorySortBy.CreatedAtAsc,
       sortDescValue: CategorySortBy.CreatedAtDesc,

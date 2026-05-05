@@ -68,7 +68,7 @@ function DataTable({
                 column.sortDescValue != null;
               return (
                 <TableCell
-                  width={column.width}
+                  // width={column.width}
                   key={column.key}
                   sortDirection={
                     sortable

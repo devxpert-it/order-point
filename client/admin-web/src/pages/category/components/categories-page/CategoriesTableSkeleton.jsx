@@ -16,9 +16,7 @@ function CategoriesTableSkeleton({ columns }) {
         <TableHead sx={{ "& .MuiTableCell-root": { fontSize: 12, py: 1 } }}>
           <TableRow>
             {columns.map((column) => (
-              <TableCell key={column.key} width={column.width}>
-                {column.label}
-              </TableCell>
+              <TableCell key={column.key}>{column.label}</TableCell>
             ))}
             <TableCell />
           </TableRow>

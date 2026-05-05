@@ -25,7 +25,6 @@ function PageHeader({ title, breadcrumbs = [], currentPage, actions }) {
             sx={{ display: "flex", alignItems: "center" }}
             color="inherit"
           >
-            <DashboardIcon sx={{ mr: 0.5 }} fontSize="inherit" />
             Dashboard
           </Link>
 
