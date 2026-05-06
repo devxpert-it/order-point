@@ -33,7 +33,7 @@ function TopCategoriesGrid({ categories, isLoading, isError, error }) {
               <Grid size={12 / 5} key={category.id}>
                 <Paper
                   sx={{
-                    py: 3,
+                    p: 3,
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
@@ -48,7 +48,12 @@ function TopCategoriesGrid({ categories, isLoading, isError, error }) {
 
                   <Typography
                     variant={"body1"}
-                    sx={{ fontWeight: "bold", mb: 1 }}
+                    sx={{
+                      fontWeight: "bold",
+                      mb: 1,
+                      wordBreak: "break-word",
+                      textAlign: "center",
+                    }}
                   >
                     {category.name}
                   </Typography>

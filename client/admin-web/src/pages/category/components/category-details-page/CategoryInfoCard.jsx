@@ -42,7 +42,9 @@ function CategoryDetailsCard({ category }) {
         </Grid>
 
         <Grid size={9}>
-          <Typography variant={"body1"}>{category.name}</Typography>
+          <Typography variant={"body1"} sx={{ wordBreak: "break-word" }}>
+            {category.name}
+          </Typography>
         </Grid>
 
         <Grid size={3}>
@@ -57,7 +59,9 @@ function CategoryDetailsCard({ category }) {
         </Grid>
 
         <Grid size={9}>
-          <Typography variant={"body1"}>{category.description}</Typography>
+          <Typography variant={"body1"} sx={{ wordBreak: "break-word" }}>
+            {category.description}
+          </Typography>
         </Grid>
 
         <Grid size={3}>

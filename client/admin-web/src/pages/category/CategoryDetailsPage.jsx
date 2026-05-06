@@ -1,5 +1,5 @@
 import { Box, Button, Grid } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   useDeleteCategory,
   useGetCategory,
@@ -14,16 +14,31 @@ import ApiErrorMessage from "../../components/ApiErrorMessage.jsx";
 import CategoryDetailsPageSkeleton from "./components/category-details-page/CategoryDetailsPageSkeleton.jsx";
 import ConfirmationDialog from "../../components/ConfirmationDialog.jsx";
 import { useConfirmationDialog } from "../../components/hooks/useConfirmationDialog.js";
+import { useToast } from "../../components/hooks/useToast.js";
+import { useEffect } from "react";
+import Toast from "../../components/Toast.jsx";
 
 function CategoryDetailsPage() {
   const { id } = useParams();
 
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const { data: response, isLoading, isError, error } = useGetCategory(id);
+  const { toast, showToast, hideToast } = useToast();
+
+  const {
+    data: response,
+    isLoading,
+    isError,
+    error: getCategoryError,
+  } = useGetCategory(id);
   const category = response?.data;
 
-  const { mutate: deleteCategory, isPending: isDeleting } = useDeleteCategory();
+  const {
+    mutate: deleteCategory,
+    isPending: isDeleting,
+    error: deleteCategoryError,
+  } = useDeleteCategory();
 
   const {
     isOpen: isDialogOpen,
@@ -31,11 +46,21 @@ function CategoryDetailsPage() {
     closeDialog: closeDeleteDialog,
   } = useConfirmationDialog();
 
+  useEffect(() => {
+    if (location.state?.toast) {
+      showToast(location.state.toast, "success");
+    }
+  }, []);
+
   const handleDeleteConfirm = () => {
     deleteCategory(category.id, {
       onSuccess: () => {
         closeDeleteDialog();
-        navigate(`/categories`);
+        navigate("/categories", {
+          state: {
+            toast: `Category "${category.name}" deleted successfully.`,
+          },
+        });
       },
     });
   };
@@ -44,7 +69,7 @@ function CategoryDetailsPage() {
     <Box>
       {isLoading && <CategoryDetailsPageSkeleton />}
 
-      {!isLoading && isError && <ApiErrorMessage error={error} />}
+      {!isLoading && isError && <ApiErrorMessage error={getCategoryError} />}
 
       {!isLoading && !isError && (
         <Box>
@@ -73,7 +98,6 @@ function CategoryDetailsPage() {
               </Box>
             }
           />
-
           <Grid container spacing={3}>
             <Grid size={3}>
               <CategoryProfileCard
@@ -102,6 +126,14 @@ function CategoryDetailsPage() {
             pendingLabel={"Deleting..."}
             onConfirm={handleDeleteConfirm}
             onCancel={closeDeleteDialog}
+            error={deleteCategoryError}
+          />
+
+          <Toast
+            open={toast.open}
+            message={toast.message}
+            severity={toast.severity}
+            onClose={hideToast}
           />
         </Box>
       )}

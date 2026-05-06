@@ -6,7 +6,7 @@ function Toast({ open, message, severity, onClose }) {
       open={open}
       autoHideDuration={4000}
       onClose={onClose}
-      anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+      anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
     >
       <Alert onClose={onClose} severity={severity} variant={"filled"}>
         {message}

@@ -28,10 +28,7 @@ internal sealed class CategoryEfCoreRepository(ApplicationDbContext dbContext) :
             query = query.Where(category => category.Status == status.Value);
         }
 
-        if (sortBy.HasValue)
-        {
-            query = SortCategories(query, sortBy.Value);
-        }
+        query = SortCategories(query, sortBy ?? CategorySortBy.CreatedAtUtcDesc);
 
         int totalCount = await query.CountAsync(cancellationToken);
 
@@ -45,6 +42,9 @@ internal sealed class CategoryEfCoreRepository(ApplicationDbContext dbContext) :
 
     public async Task<Category?> GetAsync(Guid id, CancellationToken cancellationToken = default)
         => await dbContext.Categories.SingleOrDefaultAsync(category => category.Id == id, cancellationToken);
+
+    public async Task CreateAsync(Category category, CancellationToken cancellationToken = default)
+        => await dbContext.Categories.AddAsync(category, cancellationToken);
 
     public void Delete(Category category)
         => dbContext.Categories.Remove(category);

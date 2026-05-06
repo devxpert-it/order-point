@@ -20,6 +20,22 @@ export const getCategory = async (id) => {
   return data;
 };
 
+export const createCategory = async ({
+  name,
+  description,
+  status,
+  imageUrl,
+}) => {
+  const { data } = await apiClient.post("/categories", {
+    name,
+    description,
+    status,
+    imageUrl,
+  });
+
+  return data;
+};
+
 export const deleteCategory = async (id) => {
   await apiClient.delete(`/categories/${id}`);
 };

@@ -1,11 +1,14 @@
 import { Box } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGetCategories } from "../../api/hooks/useCategoryApiService.js";
 import PageHeader from "../../components/PageHeader.jsx";
 import TopCategoriesGrid from "./components/categories-page/TopCategoriesGrid.jsx";
 import CategoriesTable from "./components/categories-page/CategoriesTable.jsx";
 import { CategorySortBy } from "../../sorting/categorySortBy.js";
 import { useDebounce } from "use-debounce";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useToast } from "../../components/hooks/useToast.js";
+import Toast from "../../components/Toast.jsx";
 
 function CategoriesPage() {
   const [pageNumber, setPageNumber] = useState(0);
@@ -14,6 +17,17 @@ function CategoriesPage() {
   const [debouncedSearchQuery] = useDebounce(searchQuery, 500);
   const [status, setStatus] = useState("");
   const [sortBy, setSortBy] = useState(CategorySortBy.CreatedAtDesc);
+
+  const navigate = useNavigate();
+
+  const location = useLocation();
+  const { toast, showToast, hideToast } = useToast();
+
+  useEffect(() => {
+    if (location.state?.toast) {
+      showToast(location.state.toast, "success");
+    }
+  }, []);
 
   const {
     data: responseAll,
@@ -75,14 +89,12 @@ function CategoriesPage() {
           label: "Categories",
         }}
       />
-
       <TopCategoriesGrid
         categories={topCategories}
         isLoading={isLoadingTop}
         isError={isErrorTop}
         error={errorTop}
       />
-
       <CategoriesTable
         categories={categories}
         totalCount={totalCount}
@@ -96,10 +108,17 @@ function CategoriesPage() {
         onSearchChange={handleSearchChange}
         status={status}
         onStatusChange={handleStatusChange}
-        onAdd={() => console.log("add category")}
+        onAdd={() => navigate("/categories/create")}
         isLoading={isLoadingAll}
         isError={isErrorAll}
         error={errorAll}
+      />
+
+      <Toast
+        open={toast.open}
+        message={toast.message}
+        severity={toast.severity}
+        onClose={hideToast}
       />
     </Box>
   );

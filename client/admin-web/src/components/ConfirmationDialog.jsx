@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
@@ -6,6 +7,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
+import ApiErrorMessage from "./ApiErrorMessage.jsx";
 
 function ConfirmationDialog({
   open,
@@ -18,17 +20,27 @@ function ConfirmationDialog({
   pendingLabel,
   onConfirm,
   onCancel,
+  error,
 }) {
   return (
     <Dialog open={open} onClose={onCancel}>
+      {error && (
+        <Box sx={{ mt: 3, mx: 3 }}>
+          <ApiErrorMessage error={error} />
+        </Box>
+      )}
+
       <DialogTitle>{title}</DialogTitle>
+
       <DialogContent>
         <DialogContentText>{message}</DialogContentText>
       </DialogContent>
+
       <DialogActions sx={{ pb: 3, pr: 3 }}>
         <Button onClick={onCancel} disabled={isPending}>
           {cancelLabel}
         </Button>
+
         <Button
           onClick={onConfirm}
           color={confirmColor}
