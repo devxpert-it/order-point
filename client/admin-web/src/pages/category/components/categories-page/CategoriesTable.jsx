@@ -150,7 +150,7 @@ function CategoriesTable({
           <CategoryFilters status={status} onStatusChange={onStatusChange} />
         }
         onAdd={onAdd}
-        addLabel={"Create category"}
+        addLabel={"Create"}
       />
 
       {isLoading && <CategoriesTableSkeleton columns={columns} />}
