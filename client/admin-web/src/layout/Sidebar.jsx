@@ -26,16 +26,36 @@ function Sidebar({ open }) {
     {
       heading: "Overview",
       items: [
-        { label: "Dashboard", icon: <DashboardIcon />, path: "/" },
-        { label: "Orders", icon: <ReceiptIcon />, path: "/orders" },
+        {
+          label: "Dashboard",
+          icon: <DashboardIcon fontSize={"small"} />,
+          path: "/",
+        },
+        {
+          label: "Orders",
+          icon: <ReceiptIcon fontSize={"small"} />,
+          path: "/orders",
+        },
       ],
     },
     {
       heading: "Management",
       items: [
-        { label: "Bartenders", icon: <PeopleIcon />, path: "/bartenders" },
-        { label: "Items", icon: <MenuBookIcon />, path: "/items" },
-        { label: "Categories", icon: <CategoryIcon />, path: "/categories" },
+        {
+          label: "Bartenders",
+          icon: <PeopleIcon fontSize={"small"} />,
+          path: "/bartenders",
+        },
+        {
+          label: "Items",
+          icon: <MenuBookIcon fontSize={"small"} />,
+          path: "/items",
+        },
+        {
+          label: "Categories",
+          icon: <CategoryIcon fontSize={"small"} />,
+          path: "/categories",
+        },
       ],
     },
   ];

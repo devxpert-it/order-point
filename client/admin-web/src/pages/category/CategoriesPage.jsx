@@ -1,30 +1,31 @@
 import { Box } from "@mui/material";
-import CategoryIcon from "@mui/icons-material/Category";
 import { useState } from "react";
-import { useCategoryApiService } from "../../api/hooks/useCategoryApiService.js";
+import { useGetCategories } from "../../api/hooks/useCategoryApiService.js";
 import PageHeader from "../../components/PageHeader.jsx";
-import TopCategoriesGrid from "./components/TopCategoriesGrid.jsx";
-import CategoriesTable from "./components/CategoriesTable.jsx";
+import TopCategoriesGrid from "./components/categories-page/TopCategoriesGrid.jsx";
+import CategoriesTable from "./components/categories-page/CategoriesTable.jsx";
 import { CategorySortBy } from "../../sorting/categorySortBy.js";
 import { useDebounce } from "use-debounce";
 
 function CategoriesPage() {
   const [pageNumber, setPageNumber] = useState(0);
   const [pageSize, setPageSize] = useState(10);
-  const [sortBy, setSortBy] = useState(CategorySortBy.CreatedAtDesc);
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearchQuery] = useDebounce(searchQuery, 500);
+  const [status, setStatus] = useState("");
+  const [sortBy, setSortBy] = useState(CategorySortBy.CreatedAtDesc);
 
   const {
     data: responseAll,
     isLoading: isLoadingAll,
     isError: isErrorAll,
     error: errorAll,
-  } = useCategoryApiService({
+  } = useGetCategories({
     pageNumber: pageNumber + 1,
     pageSize,
+    searchQuery: debouncedSearchQuery || null,
+    status: status !== "" ? status : null,
     sortBy,
-    searchQuery: debouncedSearchQuery,
   });
 
   const {
@@ -32,7 +33,7 @@ function CategoriesPage() {
     isLoading: isLoadingTop,
     isError: isErrorTop,
     error: errorTop,
-  } = useCategoryApiService({
+  } = useGetCategories({
     pageNumber: 1,
     pageSize: 5,
     sortBy: CategorySortBy.NameAsc,
@@ -51,13 +52,18 @@ function CategoriesPage() {
     setPageNumber(0);
   };
 
-  const handleSortByChange = (value) => {
-    setSortBy(value);
+  const handleSearchChange = (value) => {
+    setSearchQuery(value);
     setPageNumber(0);
   };
 
-  const handleSearchChange = (value) => {
-    setSearchQuery(value);
+  const handleStatusChange = (value) => {
+    setStatus(value);
+    setPageNumber(0);
+  };
+
+  const handleSortByChange = (value) => {
+    setSortBy(value);
     setPageNumber(0);
   };
 
@@ -67,7 +73,6 @@ function CategoriesPage() {
         title={"Categories"}
         currentPage={{
           label: "Categories",
-          icon: <CategoryIcon fontSize="inherit" />,
         }}
       />
 
@@ -89,6 +94,8 @@ function CategoriesPage() {
         onSortByChange={handleSortByChange}
         searchQuery={searchQuery}
         onSearchChange={handleSearchChange}
+        status={status}
+        onStatusChange={handleStatusChange}
         onAdd={() => console.log("add category")}
         isLoading={isLoadingAll}
         isError={isErrorAll}

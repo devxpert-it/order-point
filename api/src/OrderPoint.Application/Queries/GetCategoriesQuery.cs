@@ -5,6 +5,7 @@ using OrderPoint.Application.Repositories;
 using OrderPoint.Domain.Entities;
 using OrderPoint.Domain.Enumerations;
 using OrderPoint.Domain.Outcomes;
+using OrderPoint.Domain.Sorting;
 
 namespace OrderPoint.Application.Queries;
 
@@ -12,6 +13,7 @@ public sealed record GetCategoriesQuery(
     int PageNumber,
     int PageSize,
     string? SearchQuery,
+    CategoryStatus? Status,
     CategorySortBy? SortBy)
     : IQuery<PaginationDto<CategoryDto>>;
 
@@ -27,6 +29,7 @@ internal sealed class GetCategoriesQueryHandler(ICategoryRepository categoryRepo
                 query.PageNumber,
                 query.PageSize,
                 query.SearchQuery,
+                query.Status,
                 query.SortBy,
                 cancellationToken);
 

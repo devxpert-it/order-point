@@ -7,6 +7,7 @@ using OrderPoint.Application.Dtos;
 using OrderPoint.Application.Queries;
 using OrderPoint.Domain.Enumerations;
 using OrderPoint.Domain.Outcomes;
+using OrderPoint.Domain.Sorting;
 
 namespace OrderPoint.Api.Endpoints.Categories;
 
@@ -26,11 +27,12 @@ internal sealed class GetCategoriesEndpoint : IEndpoint
         [FromQuery] int pageNumber,
         [FromQuery] int pageSize,
         [FromQuery] string? searchQuery,
+        [FromQuery] CategoryStatus? status,
         [FromQuery] CategorySortBy? sortBy,
         [FromServices] ISender sender,
         CancellationToken cancellationToken)
     {
-        GetCategoriesQuery query = new(pageNumber, pageSize, searchQuery, sortBy);
+        GetCategoriesQuery query = new(pageNumber, pageSize, searchQuery, status, sortBy);
 
         Result<PaginationDto<CategoryDto>> result = await sender.Send(query, cancellationToken);
 

@@ -2,6 +2,7 @@
 using OrderPoint.Application.Repositories;
 using OrderPoint.Domain.Entities;
 using OrderPoint.Domain.Enumerations;
+using OrderPoint.Domain.Sorting;
 
 namespace OrderPoint.Infrastructure.EfCore.Repositories;
 
@@ -11,6 +12,7 @@ internal sealed class CategoryEfCoreRepository(ApplicationDbContext dbContext) :
         int pageNumber = 1,
         int pageSize = 10,
         string? searchQuery = null,
+        CategoryStatus? status = null,
         CategorySortBy? sortBy = null,
         CancellationToken cancellationToken = default)
     {
@@ -19,6 +21,11 @@ internal sealed class CategoryEfCoreRepository(ApplicationDbContext dbContext) :
         if (searchQuery is not null)
         {
             query = SearchCategories(query, searchQuery);
+        }
+
+        if (status.HasValue)
+        {
+            query = query.Where(category => category.Status == status.Value);
         }
 
         if (sortBy.HasValue)
@@ -35,6 +42,9 @@ internal sealed class CategoryEfCoreRepository(ApplicationDbContext dbContext) :
 
         return (categories.AsReadOnly(), totalCount);
     }
+
+    public async Task<Category?> GetAsync(Guid id) => await dbContext.Categories
+        .SingleOrDefaultAsync(category => category.Id == id);
 
     private static IQueryable<Category> SearchCategories(IQueryable<Category> query, string searchQuery)
     {

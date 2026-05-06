@@ -21,6 +21,12 @@ IResourceBuilder<ProjectResource> api = builder
 
 IResourceBuilder<ViteAppResource> adminWeb = builder
     .AddViteApp("admin-web", "../../../client/admin-web")
+    .WithEndpoint("http", endpoint =>
+    {
+        endpoint.Port = 5173;
+        endpoint.TargetPort = 5173;
+        endpoint.IsProxied = false;
+    })
     .WithReference(api)
     .WaitFor(api);
 
