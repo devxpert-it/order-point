@@ -33,7 +33,7 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
 
 // FluentValidation
-builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+builder.Services.AddValidatorsFromAssemblyContaining<Program>(includeInternalTypes: true);
 
 // Modules
 builder.Services.AddApplicationModule(builder.Configuration);

@@ -6,14 +6,14 @@ using OrderPoint.Domain.Outcomes;
 
 namespace OrderPoint.Application.Commands;
 
-public sealed record DeleteCategoryCommand(Guid CategoryId) : ICommand;
+public sealed record DeleteCategoryCommand(Guid Id) : ICommand;
 
 internal sealed class DeleteCategoryCommandHandler(ICategoryRepository categoryRepository, IUnitOfWork unitOfWork)
     : ICommandHandler<DeleteCategoryCommand>
 {
     public async Task<Result> Handle(DeleteCategoryCommand command, CancellationToken cancellationToken)
     {
-        Category? category = await categoryRepository.GetAsync(command.CategoryId, cancellationToken);
+        Category? category = await categoryRepository.GetAsync(command.Id, cancellationToken);
 
         if (category is null)
         {
