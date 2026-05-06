@@ -1,5 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
-import { getCategories, getCategory } from "../services/categoryApiService.js";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  deleteCategory,
+  getCategories,
+  getCategory,
+} from "../services/categoryApiService.js";
 
 export const useGetCategories = ({
   pageNumber,
@@ -23,5 +27,18 @@ export const useGetCategory = (id) => {
   return useQuery({
     queryKey: ["categories", "detail", { id }],
     queryFn: () => getCategory(id),
+  });
+};
+
+export const useDeleteCategory = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id) => deleteCategory(id),
+    onSuccess: () => {
+      return queryClient.invalidateQueries({
+        queryKey: ["categories", "list"],
+      });
+    },
   });
 };

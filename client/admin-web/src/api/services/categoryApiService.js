@@ -19,3 +19,7 @@ export const getCategory = async (id) => {
 
   return data;
 };
+
+export const deleteCategory = async (id) => {
+  await apiClient.delete(`/categories/${id}`);
+};

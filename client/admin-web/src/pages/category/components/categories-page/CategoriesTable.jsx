@@ -14,6 +14,12 @@ import ApiErrorMessage from "../../../../components/ApiErrorMessage.jsx";
 import { useNavigate } from "react-router-dom";
 import CategoryStatusChip from "../shared/CategoryStatusChip.jsx";
 import CategoryFilters from "./CategoryFilters.jsx";
+import { useDeleteCategory } from "../../../../api/hooks/useCategoryApiService.js";
+import { useState } from "react";
+import ConfirmationDialog from "../../../../components/ConfirmationDialog.jsx";
+import Toast from "../../../../components/Toast.jsx";
+import { useToast } from "../../../../components/hooks/useToast.js";
+import { useConfirmationDialog } from "../../../../components/hooks/useConfirmationDialog.js";
 
 function CategoriesTable({
   categories,
@@ -34,6 +40,35 @@ function CategoriesTable({
   error,
 }) {
   const navigate = useNavigate();
+
+  const { toast, showToast, hideToast } = useToast();
+
+  const { mutate: deleteCategory, isPending: isDeleting } = useDeleteCategory();
+
+  const [categoryToDelete, setCategoryToDelete] = useState(null);
+
+  const {
+    isOpen: isDialogOpen,
+    openDialog: openDeleteDialog,
+    closeDialog: closeDeleteDialog,
+  } = useConfirmationDialog();
+
+  const handleDeleteClick = (row) => {
+    setCategoryToDelete(row);
+    openDeleteDialog();
+  };
+
+  const handleDeleteConfirm = () => {
+    deleteCategory(categoryToDelete.id, {
+      onSuccess: () => {
+        closeDeleteDialog();
+        showToast(
+          `"${categoryToDelete.name}" has been deleted successfully.`,
+          "success",
+        );
+      },
+    });
+  };
 
   const columns = [
     {
@@ -87,14 +122,14 @@ function CategoriesTable({
       label: "Delete",
       icon: <DeleteIcon fontSize={"small"} />,
       color: "error",
-      onClick: (row) => console.log("delete", row),
+      onClick: handleDeleteClick,
     },
   ];
 
   const emptyState = {
     icon: <CategoryIcon sx={{ fontSize: 48 }} />,
     title: "No categories found",
-    description: "Try adjusting your search or add a new category",
+    description: "Try adjusting your filters or add a new category",
   };
 
   return (
@@ -115,20 +150,42 @@ function CategoriesTable({
       {!isLoading && isError && <ApiErrorMessage error={error} />}
 
       {!isLoading && !isError && (
-        <DataTable
-          columns={columns}
-          rows={categories}
-          getRowId={(row) => row.id}
-          rowActions={rowActions}
-          emptyState={emptyState}
-          totalCount={totalCount}
-          pageNumber={pageNumber}
-          pageSize={pageSize}
-          onPageChange={onPageChange}
-          onPageSizeChange={onPageSizeChange}
-          sortBy={sortBy}
-          onSortByChange={onSortByChange}
-        />
+        <Box>
+          <DataTable
+            columns={columns}
+            rows={categories}
+            getRowId={(row) => row.id}
+            rowActions={rowActions}
+            emptyState={emptyState}
+            totalCount={totalCount}
+            pageNumber={pageNumber}
+            pageSize={pageSize}
+            onPageChange={onPageChange}
+            onPageSizeChange={onPageSizeChange}
+            sortBy={sortBy}
+            onSortByChange={onSortByChange}
+          />
+
+          <ConfirmationDialog
+            open={isDialogOpen}
+            title={"Delete category"}
+            message={`Are you sure you want to delete "${categoryToDelete?.name}"? This action cannot be undone.`}
+            confirmLabel={"Delete"}
+            cancelLabel={"Cancel"}
+            confirmColor={"error"}
+            isPending={isDeleting}
+            pendingLabel={"Deleting..."}
+            onConfirm={handleDeleteConfirm}
+            onCancel={closeDeleteDialog}
+          />
+
+          <Toast
+            open={toast.open}
+            message={toast.message}
+            severity={toast.severity}
+            onClose={hideToast}
+          />
+        </Box>
       )}
     </Box>
   );

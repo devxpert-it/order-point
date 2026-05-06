@@ -124,10 +124,12 @@ function DataTable({
                     color: "text.secondary",
                   }}
                 >
-                  <Box sx={{ fontSize: 48 }}>{emptyState.icon}</Box>
+                  {emptyState.icon}
+
                   <Typography variant={"body1"} fontWeight={"bold"}>
                     {emptyState.title}
                   </Typography>
+
                   <Typography variant={"body2"}>
                     {emptyState.description}
                   </Typography>
