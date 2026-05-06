@@ -11,6 +11,7 @@ function CategoryProfileCard({ name, status }) {
         alignItems: "center",
         justifyContent: "center",
         height: "100%",
+        p: 3,
       }}
     >
       <Avatar
@@ -20,7 +21,14 @@ function CategoryProfileCard({ name, status }) {
         sx={{ width: 80, height: 80, mb: 2 }}
       />
 
-      <Typography variant={"body1"} sx={{ fontWeight: "bold" }}>
+      <Typography
+        variant={"body1"}
+        sx={{
+          fontWeight: "bold",
+          wordBreak: "break-word",
+          textAlign: "center",
+        }}
+      >
         {name}
       </Typography>
 

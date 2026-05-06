@@ -6,12 +6,10 @@ function ApiErrorMessage({ error }) {
   const errors = getErrors(error);
 
   return (
-    <Paper sx={{ p: 0 }}>
+    <Paper>
       <Alert severity={"error"}>
         {description && (
-          <Typography variant={"body2"} sx={{ mt: 0.5 }}>
-            {description}
-          </Typography>
+          <Typography variant={"body2"}>{description}</Typography>
         )}
 
         {errors.length > 0 && (

@@ -43,7 +43,11 @@ function CategoriesTable({
 
   const { toast, showToast, hideToast } = useToast();
 
-  const { mutate: deleteCategory, isPending: isDeleting } = useDeleteCategory();
+  const {
+    mutate: deleteCategory,
+    isPending: isDeleting,
+    error: deleteCategoryError,
+  } = useDeleteCategory();
 
   const [categoryToDelete, setCategoryToDelete] = useState(null);
 
@@ -63,7 +67,7 @@ function CategoriesTable({
       onSuccess: () => {
         closeDeleteDialog();
         showToast(
-          `"${categoryToDelete.name}" has been deleted successfully.`,
+          `Category "${categoryToDelete.name}" deleted successfully.`,
           "success",
         );
       },
@@ -81,7 +85,11 @@ function CategoriesTable({
     {
       key: "name",
       label: "Name",
-      render: (row) => <span style={{ fontWeight: "bold" }}>{row.name}</span>,
+      render: (row) => (
+        <span style={{ fontWeight: "bold", wordBreak: "break-word" }}>
+          {row.name}
+        </span>
+      ),
       sortAscValue: CategorySortBy.NameAsc,
       sortDescValue: CategorySortBy.NameDesc,
     },
@@ -142,7 +150,7 @@ function CategoriesTable({
           <CategoryFilters status={status} onStatusChange={onStatusChange} />
         }
         onAdd={onAdd}
-        addLabel={"Add category"}
+        addLabel={"Create category"}
       />
 
       {isLoading && <CategoriesTableSkeleton columns={columns} />}
@@ -177,6 +185,7 @@ function CategoriesTable({
             pendingLabel={"Deleting..."}
             onConfirm={handleDeleteConfirm}
             onCancel={closeDeleteDialog}
+            error={deleteCategoryError}
           />
 
           <Toast

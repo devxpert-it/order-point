@@ -11,6 +11,7 @@ import { CssBaseline } from "@mui/material";
 import CategoriesPage from "./pages/category/CategoriesPage.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import CategoryDetailsPage from "./pages/category/CategoryDetailsPage.jsx";
+import CategoryCreatePage from "./pages/category/CategoryCreatePage.jsx";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ createRoot(document.getElementById("root")).render(
             <Route index element={<DashboardPage />} />
             <Route path="categories" element={<CategoriesPage />} />
             <Route path="categories/:id" element={<CategoryDetailsPage />} />
+            <Route path="categories/create" element={<CategoryCreatePage />} />
           </Route>
         </Routes>
       </BrowserRouter>
