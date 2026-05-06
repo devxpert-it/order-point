@@ -144,8 +144,11 @@ function CategoriesTable({
         onAdd={onAdd}
         addLabel={"Add category"}
       />
+
       {isLoading && <CategoriesTableSkeleton columns={columns} />}
+
       {!isLoading && isError && <ApiErrorMessage error={error} />}
+
       {!isLoading && !isError && (
         <Box>
           <DataTable

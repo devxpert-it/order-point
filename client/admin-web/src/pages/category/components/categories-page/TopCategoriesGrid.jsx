@@ -12,36 +12,54 @@ function TopCategoriesGrid({ categories, isLoading, isError, error }) {
 
       {!isLoading && !isError && (
         <Grid container spacing={2} sx={{ mb: 3 }}>
-          {categories.map((category) => (
-            <Grid size={12 / 5} key={category.id}>
+          {categories.length === 0 ? (
+            <Grid size={12}>
               <Paper
                 sx={{
-                  py: 3,
+                  color: "text.secondary",
                   display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 1,
+                  p: 3,
                 }}
               >
-                <Avatar
-                  src={imagePlaceholder}
-                  alt={`${category.name} image`}
-                  variant={"rounded"}
-                  sx={{ width: 50, height: 50, mb: 1 }}
-                />
-
-                <Typography
-                  variant={"body1"}
-                  sx={{ fontWeight: "bold", mb: 1 }}
-                >
-                  {category.name}
-                </Typography>
-
-                <Typography variant={"body2"} sx={{ fontSize: 12 }}>
-                  {category.itemsCount} items
+                <Typography>
+                  Top categories ordered by items count will be displayed here
                 </Typography>
               </Paper>
             </Grid>
-          ))}
+          ) : (
+            categories.map((category) => (
+              <Grid size={12 / 5} key={category.id}>
+                <Paper
+                  sx={{
+                    py: 3,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <Avatar
+                    src={imagePlaceholder}
+                    alt={`${category.name} image`}
+                    variant={"rounded"}
+                    sx={{ width: 50, height: 50, mb: 1 }}
+                  />
+
+                  <Typography
+                    variant={"body1"}
+                    sx={{ fontWeight: "bold", mb: 1 }}
+                  >
+                    {category.name}
+                  </Typography>
+
+                  <Typography variant={"body2"} sx={{ fontSize: 12 }}>
+                    {category.itemsCount} items
+                  </Typography>
+                </Paper>
+              </Grid>
+            ))
+          )}
         </Grid>
       )}
     </Box>
