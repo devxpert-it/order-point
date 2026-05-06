@@ -4,6 +4,7 @@ import {
   deleteCategory,
   getCategories,
   getCategory,
+  updateCategory,
 } from "../services/categoryApiService.js";
 
 export const useGetCategories = ({
@@ -40,6 +41,22 @@ export const useCreateCategory = () => {
       return queryClient.invalidateQueries({
         queryKey: ["categories", "list"],
       });
+    },
+  });
+};
+
+export const useUpdateCategory = (id) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (body) => updateCategory(id, body),
+    onSuccess: () => {
+      return Promise.all([
+        queryClient.invalidateQueries({ queryKey: ["categories", "list"] }),
+        queryClient.invalidateQueries({
+          queryKey: ["categories", "detail", { id }],
+        }),
+      ]);
     },
   });
 };

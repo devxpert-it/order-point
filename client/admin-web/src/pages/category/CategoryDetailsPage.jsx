@@ -82,7 +82,7 @@ function CategoryDetailsPage() {
                 <Button
                   variant={"outlined"}
                   startIcon={<EditIcon />}
-                  onClick={() => console.log("edit")}
+                  onClick={() => navigate(`/categories/${id}/edit`)}
                   sx={{ mr: 1 }}
                 >
                   Edit

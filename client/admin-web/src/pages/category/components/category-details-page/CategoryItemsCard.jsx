@@ -11,7 +11,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import NorthEastIcon from "@mui/icons-material/NorthEast";
+import AddIcon from "@mui/icons-material/Add";
 import imagePlaceholder from "../../../../assets/image-placeholder.svg";
 
 function CategoryItemsCard({ name }) {
@@ -42,11 +42,11 @@ function CategoryItemsCard({ name }) {
 
         <Button
           variant={"outlined"}
-          startIcon={<NorthEastIcon />}
-          onClick={() => console.log("go to items")}
+          startIcon={<AddIcon />}
+          onClick={() => console.log("add item")}
           sx={{ alignSelf: "flex-start" }}
         >
-          View all
+          Add item
         </Button>
       </Box>
 

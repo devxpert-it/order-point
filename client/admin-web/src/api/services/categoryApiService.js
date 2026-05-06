@@ -36,6 +36,18 @@ export const createCategory = async ({
   return data;
 };
 
+export const updateCategory = async (
+  id,
+  { name, description, status, imageUrl },
+) => {
+  await apiClient.put(`/categories/${id}`, {
+    name,
+    description,
+    status,
+    imageUrl,
+  });
+};
+
 export const deleteCategory = async (id) => {
   await apiClient.delete(`/categories/${id}`);
 };

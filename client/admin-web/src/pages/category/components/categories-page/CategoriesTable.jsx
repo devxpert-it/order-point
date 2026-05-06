@@ -124,7 +124,7 @@ function CategoriesTable({
     {
       label: "Edit",
       icon: <EditIcon fontSize={"small"} />,
-      onClick: (row) => console.log("edit", row),
+      onClick: (row) => navigate(`/categories/${row.id}/edit`),
     },
     {
       label: "Delete",
