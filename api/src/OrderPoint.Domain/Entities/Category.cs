@@ -49,4 +49,30 @@ public sealed class Category : Entity
 
         return Result.Success(category);
     }
+
+    public Result Update(
+        string name,
+        string description,
+        CategoryStatus status,
+        string? imageUrl)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            return Result.Failure(CategoryErrors.NameIsRequired);
+        }
+
+        if (string.IsNullOrWhiteSpace(description))
+        {
+            return Result.Failure(CategoryErrors.DescriptionIsRequired);
+        }
+
+        Name = name;
+        Description = description;
+        Status = status;
+        ImageUrl = imageUrl;
+
+        UpdatedAtUtc = DateTimeOffset.UtcNow;
+
+        return Result.Success();
+    }
 }
