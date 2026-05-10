@@ -1,4 +1,5 @@
-﻿using OrderPoint.Domain.Entities;
+﻿using OrderPoint.Application.Dtos.Items;
+using OrderPoint.Domain.Entities;
 
 namespace OrderPoint.Application.Dtos.Mappers;
 
@@ -12,8 +13,18 @@ internal static class ItemMapper
         item.Portion,
         item.Price,
         item.ImageUrl,
+        item.Category.ToItemCategoryDto(),
         item.CreatedAtUtc,
-        item.UpdatedAtUtc,
-        item.Category.Name
+        item.UpdatedAtUtc
+    );
+
+    internal static ItemCategoryDto ToItemCategoryDto(this Category category) => new(
+        category.Id,
+        category.Name,
+        category.Description,
+        category.Status.ToString(),
+        category.ImageUrl,
+        category.CreatedAtUtc,
+        category.UpdatedAtUtc
     );
 }

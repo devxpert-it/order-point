@@ -1,4 +1,5 @@
 ﻿using OrderPoint.Application.Dtos;
+using OrderPoint.Application.Dtos.Categories;
 using OrderPoint.Application.Dtos.Mappers;
 using OrderPoint.Application.Mediator;
 using OrderPoint.Application.Repositories;
@@ -7,7 +8,7 @@ using OrderPoint.Domain.Enumerations;
 using OrderPoint.Domain.Outcomes;
 using OrderPoint.Domain.Sorting;
 
-namespace OrderPoint.Application.Queries.CategoryQueries;
+namespace OrderPoint.Application.Queries.Categories;
 
 public sealed record GetCategoriesQuery(
     int PageNumber,

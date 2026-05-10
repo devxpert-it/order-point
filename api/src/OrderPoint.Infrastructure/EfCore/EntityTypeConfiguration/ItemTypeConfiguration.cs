@@ -30,11 +30,11 @@ internal sealed class ItemTypeConfiguration : IEntityTypeConfiguration<Item>
         builder
             .Property(item => item.Status)
             .IsRequired();
-        
+
         builder
             .Property(item => item.Portion)
             .IsRequired();
-        
+
         builder
             .Property(item => item.Price)
             .IsRequired();
@@ -45,11 +45,11 @@ internal sealed class ItemTypeConfiguration : IEntityTypeConfiguration<Item>
             .IsRequired(false);
 
         builder
-            .Property(category => category.CreatedAtUtc)
+            .Property(item => item.CreatedAtUtc)
             .IsRequired();
 
         builder
-            .Property(category => category.UpdatedAtUtc)
+            .Property(item => item.UpdatedAtUtc)
             .IsRequired(false);
     }
 }

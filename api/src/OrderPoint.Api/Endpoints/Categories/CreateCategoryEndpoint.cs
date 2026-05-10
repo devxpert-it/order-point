@@ -5,8 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using OrderPoint.Api.Configuration;
 using OrderPoint.Api.Extensions;
 using OrderPoint.Application.Commands;
-using OrderPoint.Application.Commands.CategoryCommands;
+using OrderPoint.Application.Commands.Categories;
 using OrderPoint.Application.Dtos;
+using OrderPoint.Application.Dtos.Categories;
 using OrderPoint.Domain.Enumerations;
 using OrderPoint.Domain.Outcomes;
 

@@ -1,4 +1,4 @@
-﻿using OrderPoint.Application.Dtos;
+﻿using OrderPoint.Application.Dtos.Categories;
 using OrderPoint.Application.Dtos.Mappers;
 using OrderPoint.Application.Mediator;
 using OrderPoint.Application.Repositories;
@@ -6,7 +6,7 @@ using OrderPoint.Domain.Entities;
 using OrderPoint.Domain.Errors;
 using OrderPoint.Domain.Outcomes;
 
-namespace OrderPoint.Application.Queries.CategoryQueries;
+namespace OrderPoint.Application.Queries.Categories;
 
 public sealed record GetCategoryQuery(Guid CategoryId) : IQuery<CategoryDto>;
 

@@ -1,7 +1,4 @@
-﻿using OrderPoint.Domain.Entities;
-using OrderPoint.Domain.Enumerations;
-
-namespace OrderPoint.Application.Dtos;
+﻿namespace OrderPoint.Application.Dtos.Items;
 
 public sealed record ItemDto(
     Guid Id,
@@ -11,6 +8,6 @@ public sealed record ItemDto(
     double Portion,
     decimal Price,
     string? ImageUrl,
+    ItemCategoryDto Category,
     DateTimeOffset CreatedAtUtc,
-    DateTimeOffset? UpdatedAtUtc,
-    string CategoryName);
+    DateTimeOffset? UpdatedAtUtc);

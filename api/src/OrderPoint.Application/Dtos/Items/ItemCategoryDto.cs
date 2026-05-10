@@ -1,11 +1,10 @@
-﻿namespace OrderPoint.Application.Dtos;
+﻿namespace OrderPoint.Application.Dtos.Items;
 
-public sealed record CategoryDto(
+public sealed record ItemCategoryDto(
     Guid Id,
     string Name,
     string Description,
     string Status,
     string? ImageUrl,
-    int ItemsCount,
     DateTimeOffset CreatedAtUtc,
     DateTimeOffset? UpdatedAtUtc);

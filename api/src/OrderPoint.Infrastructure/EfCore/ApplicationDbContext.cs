@@ -7,7 +7,9 @@ namespace OrderPoint.Infrastructure.EfCore;
 public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
     : DbContext(options), IUnitOfWork
 {
-    internal DbSet<Category> Categories { get; init; } = null!;
+    internal DbSet<Category> Categories { get; init; }
+
+    internal DbSet<Item> Items { get; init; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

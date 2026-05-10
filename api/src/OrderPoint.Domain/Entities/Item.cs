@@ -8,14 +8,21 @@ namespace OrderPoint.Domain.Entities;
 public sealed class Item : Entity
 {
     public string Name { get; private set; }
+
     public string Description { get; private set; }
+
     public ItemStatus Status { get; private set; }
+
     public double Portion { get; private set; }
+
     public decimal Price { get; private set; }
+
     public string? ImageUrl { get; private set; }
+
     public Guid CategoryId { get; private set; }
+
     public Category Category { get; private set; } = null!;
-    
+
     //TODO: add Orders later
 
     private Item(
@@ -56,28 +63,27 @@ public sealed class Item : Entity
         {
             return Result.Failure<Item>(ItemErrors.DescriptionIsRequired);
         }
-        
-        if (status != ItemStatus.Available && status != ItemStatus.Unavailable)
-        {
-            return Result.Failure<Item>(ItemErrors.ItemStatusIsRequired);
-        }
-        
+
         if (portion <= 0)
         {
             return Result.Failure<Item>(ItemErrors.PortionIsRequired);
         }
-        
+
         if (price <= 0)
         {
             return Result.Failure<Item>(ItemErrors.PriceIsRequired);
         }
-        
-        if (Guid.Empty == categoryId)
-        {
-            return Result.Failure<Item>(ItemErrors.CategoryIdIsRequired);
-        }
 
-        Item item = new(Guid.CreateVersion7(), name, description, status, portion, price, imageUrl, categoryId, DateTimeOffset.UtcNow);
+        Item item = new(
+            Guid.CreateVersion7(),
+            name,
+            description,
+            status,
+            portion,
+            price,
+            imageUrl,
+            categoryId,
+            DateTimeOffset.UtcNow);
 
         return Result.Success(item);
     }
@@ -101,26 +107,16 @@ public sealed class Item : Entity
             return Result.Failure(ItemErrors.DescriptionIsRequired);
         }
 
-        if (status != ItemStatus.Available && status != ItemStatus.Unavailable)
-        {
-            return Result.Failure<Item>(ItemErrors.ItemStatusIsRequired);
-        }
-        
         if (portion <= 0)
         {
             return Result.Failure<Item>(ItemErrors.PortionIsRequired);
         }
-        
+
         if (price <= 0)
         {
             return Result.Failure<Item>(ItemErrors.PriceIsRequired);
         }
-        
-        if (Guid.Empty == categoryId)
-        {
-            return Result.Failure<Item>(ItemErrors.CategoryIdIsRequired);
-        }
-        
+
         Name = name;
         Description = description;
         Status = status;
@@ -133,5 +129,4 @@ public sealed class Item : Entity
 
         return Result.Success();
     }
-    
 }

@@ -5,7 +5,7 @@ using OrderPoint.Domain.Enumerations;
 using OrderPoint.Domain.Errors;
 using OrderPoint.Domain.Outcomes;
 
-namespace OrderPoint.Application.Commands.CategoryCommands;
+namespace OrderPoint.Application.Commands.Categories;
 
 public sealed record UpdateCategoryCommand(
     Guid Id,

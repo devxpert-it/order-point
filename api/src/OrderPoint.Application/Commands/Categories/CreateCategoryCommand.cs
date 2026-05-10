@@ -1,4 +1,5 @@
 ﻿using OrderPoint.Application.Dtos;
+using OrderPoint.Application.Dtos.Categories;
 using OrderPoint.Application.Dtos.Mappers;
 using OrderPoint.Application.Mediator;
 using OrderPoint.Application.Repositories;
@@ -6,7 +7,7 @@ using OrderPoint.Domain.Entities;
 using OrderPoint.Domain.Enumerations;
 using OrderPoint.Domain.Outcomes;
 
-namespace OrderPoint.Application.Commands.CategoryCommands;
+namespace OrderPoint.Application.Commands.Categories;
 
 public sealed record CreateCategoryCommand(
     string Name,

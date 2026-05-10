@@ -4,7 +4,7 @@ using OrderPoint.Domain.Entities;
 using OrderPoint.Domain.Errors;
 using OrderPoint.Domain.Outcomes;
 
-namespace OrderPoint.Application.Commands.CategoryCommands;
+namespace OrderPoint.Application.Commands.Categories;
 
 public sealed record DeleteCategoryCommand(Guid Id) : ICommand;
 
