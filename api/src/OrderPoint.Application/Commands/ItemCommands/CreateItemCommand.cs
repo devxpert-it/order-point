@@ -1,0 +1,40 @@
+﻿using OrderPoint.Application.Dtos;
+using OrderPoint.Application.Dtos.Mappers;
+using OrderPoint.Application.Mediator;
+using OrderPoint.Application.Repositories;
+using OrderPoint.Domain.Entities;
+using OrderPoint.Domain.Enumerations;
+using OrderPoint.Domain.Outcomes;
+
+namespace OrderPoint.Application.Commands.ItemCommands;
+
+public sealed record CreateItemCommand(
+    string Name,
+    string Description,
+    ItemStatus Status,
+    double Portion,
+    decimal Price,
+    string? ImageUrl,
+    Guid CategoryId) : ICommand<ItemDto>;
+
+internal sealed class CreateItemCommandHandler(IItemRepository itemRepository, IUnitOfWork unitOfWork)
+    : ICommandHandler<CreateItemCommand, ItemDto>
+{
+    public async Task<Result<ItemDto>> Handle(CreateItemCommand command, CancellationToken cancellationToken)
+    {
+        Result<Item> result = Item.Create(command.Name, command.Description, command.Status, 
+                                            command.Portion, command.Price, command.ImageUrl, command.CategoryId);
+        
+        if (result.IsFailure)
+        {
+            return Result.Failure<ItemDto>(result.Error);
+        }
+
+        await itemRepository.CreateAsync(result.Value, cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+        
+        var itemDto = result.Value.ToItemDto();
+        
+        return Result.Success(itemDto);
+    }
+}

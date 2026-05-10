@@ -5,6 +5,7 @@ using OrderPoint.Api.Configuration;
 using OrderPoint.Api.Extensions;
 using OrderPoint.Application.Dtos;
 using OrderPoint.Application.Queries;
+using OrderPoint.Application.Queries.CategoryQueries;
 using OrderPoint.Domain.Enumerations;
 using OrderPoint.Domain.Outcomes;
 using OrderPoint.Domain.Sorting;

@@ -7,7 +7,7 @@ using OrderPoint.Domain.Enumerations;
 using OrderPoint.Domain.Outcomes;
 using OrderPoint.Domain.Sorting;
 
-namespace OrderPoint.Application.Queries;
+namespace OrderPoint.Application.Queries.CategoryQueries;
 
 public sealed record GetCategoriesQuery(
     int PageNumber,

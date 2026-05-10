@@ -6,7 +6,7 @@ using OrderPoint.Domain.Entities;
 using OrderPoint.Domain.Errors;
 using OrderPoint.Domain.Outcomes;
 
-namespace OrderPoint.Application.Queries;
+namespace OrderPoint.Application.Queries.CategoryQueries;
 
 public sealed record GetCategoryQuery(Guid CategoryId) : IQuery<CategoryDto>;
 
