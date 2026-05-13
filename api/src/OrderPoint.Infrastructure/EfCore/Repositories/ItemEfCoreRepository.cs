@@ -1,4 +1,5 @@
-﻿using OrderPoint.Application.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using OrderPoint.Application.Repositories;
 using OrderPoint.Domain.Entities;
 using OrderPoint.Domain.Enumerations;
 using OrderPoint.Domain.Sorting;
@@ -16,8 +17,8 @@ internal sealed class ItemEfCoreRepository(ApplicationDbContext dbContext) : IIt
         CancellationToken cancellationToken = default) =>
         throw new NotImplementedException();
 
-    public Task<Item?> GetAsync(Guid id, CancellationToken cancellationToken = default)
-        => throw new NotImplementedException();
+    public async Task<Item?> GetAsync(Guid id, CancellationToken cancellationToken = default)
+        => await dbContext.Items.SingleOrDefaultAsync(item => item.Id == id, cancellationToken);
 
     public async Task CreateAsync(Item item, CancellationToken cancellationToken = default)
         => await dbContext.Items.AddAsync(item, cancellationToken);
