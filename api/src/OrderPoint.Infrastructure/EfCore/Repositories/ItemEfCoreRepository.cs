@@ -18,7 +18,7 @@ internal sealed class ItemEfCoreRepository(ApplicationDbContext dbContext) : IIt
         throw new NotImplementedException();
 
     public async Task<Item?> GetAsync(Guid id, CancellationToken cancellationToken = default)
-        => await dbContext.Items.SingleOrDefaultAsync(item => item.Id == id, cancellationToken);
+        => await dbContext.Items.Include(item => item.Category).SingleOrDefaultAsync(item => item.Id == id, cancellationToken);
 
     public async Task CreateAsync(Item item, CancellationToken cancellationToken = default)
         => await dbContext.Items.AddAsync(item, cancellationToken);

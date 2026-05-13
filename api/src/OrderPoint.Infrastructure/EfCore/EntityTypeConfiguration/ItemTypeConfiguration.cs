@@ -51,5 +51,10 @@ internal sealed class ItemTypeConfiguration : IEntityTypeConfiguration<Item>
         builder
             .Property(item => item.UpdatedAtUtc)
             .IsRequired(false);
+
+        builder
+            .HasOne(item => item.Category)
+            .WithMany(category => category.Items)
+            .HasForeignKey(item => item.CategoryId).IsRequired();
     }
 }

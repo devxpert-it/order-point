@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using OrderPoint.Api.Configuration;
 using OrderPoint.Api.Endpoints.Categories;
 using OrderPoint.Api.Extensions;
 using OrderPoint.Application.Commands.Categories;
@@ -25,7 +26,7 @@ public sealed record CreateItemRequest(
 
 internal sealed record CreateItemResponse(ItemDto Data);
 
-internal sealed class CreateItemEndpoint
+internal sealed class CreateItemEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
